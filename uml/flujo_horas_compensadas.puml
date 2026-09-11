@@ -1,0 +1,22 @@
+@startuml flujo_horas_compensadas
+title Flujo: utilizar horas compensadas (Python)
+
+start
+:Ingresar codigo de empleado, horas y motivo;
+:Buscar empleado y su saldo;
+if (0 < horas <= 24?) then (si)
+  if (horas <= saldo?) then (si)
+    :Descontar horas del saldo\n(consumir_horas_compensadas);
+    :Registrar HoraCompensada de consumo;
+    :Registrar SolicitudCompensacion APROBADA;
+    :Mostrar el nuevo saldo;
+  else (no)
+    :Lanzar SaldoInsuficienteError;
+    :El saldo no cambia;
+  endif
+else (no)
+  :Lanzar HorasInvalidasError;
+endif
+stop
+
+@enduml

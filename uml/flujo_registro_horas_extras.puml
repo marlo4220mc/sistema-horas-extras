@@ -1,0 +1,24 @@
+@startuml flujo_registro_horas_extras
+title Flujo: registrar horas extras (Python)
+
+start
+:Ingresar codigo de empleado;
+:Buscar empleado en list[Empleado];
+if (Existe el empleado?) then (si)
+  :Ingresar fecha, cantidad de horas y motivo;
+  if (0 < horas <= 24?) then (si)
+    :Crear HoraExtra\n(calcula el valor con el factor configurado);
+    :Crear SolicitudHoraExtra en estado PENDIENTE;
+    :Agregar a list[RegistroHora] y list[Solicitud];
+    :Mostrar el pago calculado;
+  else (no)
+    :Lanzar HorasInvalidasError;
+    :Mostrar mensaje de error;
+  endif
+else (no)
+  :Lanzar EmpleadoNoEncontradoError;
+  :Mostrar mensaje de error;
+endif
+stop
+
+@enduml

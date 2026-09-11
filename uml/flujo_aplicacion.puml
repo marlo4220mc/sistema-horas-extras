@@ -1,0 +1,21 @@
+@startuml flujo_aplicacion
+' Flujo general de la aplicacion de consola.
+title Sistema de Gestion y Control de Horas Extras y Horas Compensadas\nFlujo general de la aplicacion
+
+start
+:Mostrar MENU PRINCIPAL\n(13 opciones + salir);
+repeat
+  :Seleccionar opcion;
+  :Leer datos de entrada;
+  if (Datos validos?) then (si)
+    :Ejecutar operacion\n(registro / busqueda / listado /\naprobacion / calculo / reporte);
+    :Mostrar resultado;
+  else (no)
+    :Mostrar mensaje de error\n(excepcion controlada);
+  endif
+  :Volver al menu principal;
+repeat while (\u00bfDesea salir?) is (no)
+->si;
+stop
+
+@enduml

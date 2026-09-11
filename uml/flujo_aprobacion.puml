@@ -1,0 +1,25 @@
+@startuml flujo_aprobacion
+title Flujo: aprobar o rechazar una solicitud (Python)
+
+start
+:Ingresar id de la solicitud;
+:Buscar solicitud en list[Solicitud];
+if (Existe la solicitud?) then (si)
+  if (Estado actual = PENDIENTE?) then (si)
+    if (Decision?) then (aprobar)
+      :Cambiar estado a APROBADA;
+    else (rechazar)
+      :Ingresar motivo;
+      :Cambiar estado a RECHAZADA;
+    endif
+    :Registrar usuario y fecha de resolucion;
+    :Mostrar confirmacion;
+  else (no)
+    :Lanzar EstadoSolicitudInvalidaError\n(no se puede procesar dos veces);
+  endif
+else (no)
+  :Lanzar SolicitudNoEncontradaError;
+endif
+stop
+
+@enduml
