@@ -1,0 +1,218 @@
+@startuml diagrama_clases
+' =====================================================================
+' Sistema de Gestion y Control de Horas Extras y Horas Compensadas
+' Curso: 1FIS275 - Fundamentos de Programacion 2
+' Lenguaje: Python 3
+' Este diagrama refleja EXACTAMENTE las clases del codigo fuente (src/).
+' =====================================================================
+
+skinparam backgroundColor #FFFFFF
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+skinparam classFontName SansSerif
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package modelo {
+
+  abstract class Persona {
+    - nombres : str
+    - apellidos : str
+    - tipo_documento : str
+    - numero_documento : str
+    - correo : str
+    + nombre_completo : str
+    + obtener_rol() : str <<abstract>>
+    # _validar_texto(valor : str, campo : str) : str <<static>>
+  }
+
+  class Empleado {
+    - codigo_empleado : str
+    - salario_mensual : float
+    - cargo : str
+    - fecha_ingreso : date
+    - jornada : JornadaLaboral
+    - saldo_horas_compensadas : float
+    - activo : bool
+    + obtener_rol() : str
+    + calcular_valor_hora() : float
+    + agregar_horas_compensadas(horas : float) : None
+    + consumir_horas_compensadas(horas : float) : None
+  }
+
+  class Supervisor {
+    - area_a_cargo : str
+    - limite_horas_aprobables : float
+    + obtener_rol() : str
+    + puede_aprobar(horas : float) : bool
+  }
+
+  class ResponsableRRHH {
+    - responsabilidad_principal : str
+    + obtener_rol() : str
+  }
+
+  class JornadaLaboral {
+    - horas_diarias : float
+    - dias_laborables_mes : int
+    - hora_inicio : time
+    - hora_fin : time
+    + calcular_horas_mensuales() : float
+  }
+
+  abstract class RegistroHora {
+    - id : str
+    - empleado : Empleado
+    - fecha : date
+    - cantidad_horas : float
+    - motivo : str
+    + calcular_valor() : float <<abstract>>
+    + obtener_tipo() : str <<abstract>>
+    + resumen() : str
+  }
+
+  class HoraExtra {
+    - factor_recargo : float
+    + calcular_valor() : float
+    + obtener_tipo() : str
+  }
+
+  class HoraCompensada {
+    - es_consumo : bool
+    + calcular_valor() : float
+    + obtener_tipo() : str
+  }
+
+  abstract class Solicitud {
+    - id : str
+    - empleado : Empleado
+    - fecha_solicitud : date
+    - estado : EstadoSolicitud
+    - observacion : str
+    - fecha_resolucion : datetime
+    - resuelto_por : str
+    + aprobar(usuario : str) : None
+    + rechazar(motivo : str, usuario : str) : None
+    + calcular_monto() : float <<abstract>>
+    + obtener_tipo() : str <<abstract>>
+    + detalle() : str <<abstract>>
+    + resumen() : str
+  }
+
+  class SolicitudHoraExtra {
+    - hora_extra : HoraExtra
+    + calcular_monto() : float
+    + obtener_tipo() : str
+    + detalle() : str
+    + pagar(usuario : str) : None
+    + compensar(usuario : str) : None
+  }
+
+  class SolicitudCompensacion {
+    - cantidad_horas : float
+    - motivo_uso : str
+    + calcular_monto() : float
+    + obtener_tipo() : str
+    + detalle() : str
+  }
+
+  enum EstadoSolicitud {
+    PENDIENTE
+    APROBADA
+    RECHAZADA
+    PAGADA
+    COMPENSADA
+  }
+}
+
+package servicio {
+
+  class CalculadoraHoras {
+    - factor_hora_extra : float
+    - factor_hora_compensada : float
+    + valor_hora(empleado : Empleado) : float
+    + pago_horas_extras(empleado : Empleado, horas : float) : float
+    + valor_horas_compensadas(empleado : Empleado, horas : float) : float
+    + redondear(valor : float) : float <<static>>
+  }
+
+  class GestorHorasExtras {
+    - empleados : list[Empleado]
+    - registros : list[RegistroHora]
+    - solicitudes : list[Solicitud]
+    - calculadora : CalculadoraHoras
+    + registrar_empleado(...) : Empleado
+    + buscar_empleado_por_codigo(codigo : str) : Empleado
+    + existe_empleado_con_codigo(codigo : str) : bool
+    + existe_empleado_con_documento(documento : str) : bool
+    + listar_empleados() : list[Empleado]
+    + registrar_solicitud_hora_extra(...) : SolicitudHoraExtra
+    + buscar_solicitud(id : str) : Solicitud
+    + aprobar_solicitud(id : str, usuario : str) : Solicitud
+    + rechazar_solicitud(id : str, motivo : str, usuario : str) : Solicitud
+    + pagar_solicitud(id : str, usuario : str) : SolicitudHoraExtra
+    + compensar_solicitud_hora_extra(id : str, usuario : str) : SolicitudHoraExtra
+    + registrar_horas_compensadas(...) : HoraCompensada
+    + consultar_saldo(codigo : str) : float
+    + utilizar_horas_compensadas(...) : SolicitudCompensacion
+    + historial_por_empleado(codigo : str) : list[RegistroHora]
+    + reporte_general() : str
+    + total_a_pagar() : float
+  }
+
+  class MenuConsola {
+    - gestor : GestorHorasExtras
+    - continuar : bool
+    - entrada_agotada : bool
+    + iniciar() : None
+    + _ejecutar_opcion(opcion : int) : None
+    + _menu_reportes() : None
+  }
+}
+
+package excepciones {
+  class EmpleadoNoEncontradoError
+  class EmpleadoDuplicadoError
+  class HorasInvalidasError
+  class SaldoInsuficienteError
+  class SolicitudNoEncontradaError
+  class EstadoSolicitudInvalidaError
+}
+
+class Main {
+  + main() : None
+}
+
+' ---------------------- Herencia ----------------------
+Persona <|-- Empleado
+Empleado <|-- Supervisor
+Empleado <|-- ResponsableRRHH
+RegistroHora <|-- HoraExtra
+RegistroHora <|-- HoraCompensada
+Solicitud <|-- SolicitudHoraExtra
+Solicitud <|-- SolicitudCompensacion
+
+' ---------------------- Composicion / agregacion ----------------------
+Empleado *-- "1" JornadaLaboral : jornada
+GestorHorasExtras o-- "0..*" Empleado : administra
+GestorHorasExtras o-- "0..*" RegistroHora : administra
+GestorHorasExtras o-- "0..*" Solicitud : administra
+
+' ---------------------- Asociaciones ----------------------
+RegistroHora --> "1" Empleado : pertenece a
+Solicitud --> "1" Empleado : pertenece a
+SolicitudHoraExtra --> "1" HoraExtra : solicita
+Solicitud --> "1" EstadoSolicitud : usa
+GestorHorasExtras --> "1" CalculadoraHoras : usa
+MenuConsola --> "1" GestorHorasExtras : usa
+Main --> MenuConsola : usa
+
+' ---------------------- Dependencias con excepciones ----------------------
+GestorHorasExtras ..> EmpleadoNoEncontradoError
+GestorHorasExtras ..> EmpleadoDuplicadoError
+GestorHorasExtras ..> HorasInvalidasError
+GestorHorasExtras ..> SaldoInsuficienteError
+GestorHorasExtras ..> SolicitudNoEncontradaError
+GestorHorasExtras ..> EstadoSolicitudInvalidaError
+
+@enduml
