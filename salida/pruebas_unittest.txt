@@ -1,0 +1,26 @@
+test_flujo_pagar_y_compensar (test_sistema.PruebasSistema.test_flujo_pagar_y_compensar) ... ok
+test_hu01_registrar_empleado_correctamente (test_sistema.PruebasSistema.test_hu01_registrar_empleado_correctamente) ... ok
+test_hu02_buscar_empleado_inexistente (test_sistema.PruebasSistema.test_hu02_buscar_empleado_inexistente) ... ok
+test_hu02_buscar_empleado_por_codigo (test_sistema.PruebasSistema.test_hu02_buscar_empleado_por_codigo) ... ok
+test_hu04_registrar_horas_extras (test_sistema.PruebasSistema.test_hu04_registrar_horas_extras) ... ok
+test_hu05_solicitud_inexistente (test_sistema.PruebasSistema.test_hu05_solicitud_inexistente) ... ok
+test_hu06_aprobar_solicitud (test_sistema.PruebasSistema.test_hu06_aprobar_solicitud) ... ok
+test_hu07_rechazar_solicitud (test_sistema.PruebasSistema.test_hu07_rechazar_solicitud) ... ok
+test_hu08_calcular_pago_horas_extras (test_sistema.PruebasSistema.test_hu08_calcular_pago_horas_extras) ... ok
+test_hu08_calcular_valor_hora (test_sistema.PruebasSistema.test_hu08_calcular_valor_hora) ... ok
+test_hu09_hu10_registrar_horas_compensadas_y_saldo (test_sistema.PruebasSistema.test_hu09_hu10_registrar_horas_compensadas_y_saldo) ... ok
+test_hu11_utilizar_horas_compensadas (test_sistema.PruebasSistema.test_hu11_utilizar_horas_compensadas) ... ok
+test_polimorfismo_calcular_monto (test_sistema.PruebasSistema.test_polimorfismo_calcular_monto) ... ok
+test_polimorfismo_calcular_valor (test_sistema.PruebasSistema.test_polimorfismo_calcular_valor) ... ok
+test_polimorfismo_obtener_rol (test_sistema.PruebasSistema.test_polimorfismo_obtener_rol) ... ok
+test_validacion_aprobar_dos_veces (test_sistema.PruebasSistema.test_validacion_aprobar_dos_veces) ... ok
+test_validacion_datos_empleado (test_sistema.PruebasSistema.test_validacion_datos_empleado) ... ok
+test_validacion_empleado_duplicado (test_sistema.PruebasSistema.test_validacion_empleado_duplicado) ... ok
+test_validacion_fecha_futura (test_sistema.PruebasSistema.test_validacion_fecha_futura) ... ok
+test_validacion_horas_invalidas (test_sistema.PruebasSistema.test_validacion_horas_invalidas) ... ok
+test_validacion_saldo_insuficiente (test_sistema.PruebasSistema.test_validacion_saldo_insuficiente) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.001s
+
+OK
