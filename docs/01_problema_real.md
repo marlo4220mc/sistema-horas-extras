@@ -1,13 +1,13 @@
 # ETAPA 1 — Problema Real
 
-**Empresa (ficticia para fines académicos):** [NOMBRE DE LA EMPRESA]
+**Empresa (ficticia para fines académicos):** Fábrica Marsar SRL
 **Proceso analizado:** Control de Horas Extras y Horas Compensadas del personal
 
 ---
 
 ## 1. Contexto
 
-[NOMBRE DE LA EMPRESA] es una organización del sector servicios que cuenta
+Fábrica Marsar SRL es una organización del sector servicios que cuenta
 con personal administrativo, operativo y de supervisión. Por la naturaleza
 de su actividad, es habitual que determinados empleados deban extender su
 jornada de trabajo habitual para cumplir con entregas, picos de operación
@@ -87,7 +87,7 @@ Se requiere una **aplicación de consola en Python** que:
 
 Desarrollar una aplicación de consola en Python que gestione y controle las
 horas extras y las horas compensadas de los empleados de
-[NOMBRE DE LA EMPRESA], permitiendo el registro, la aprobación, el
+Fábrica Marsar SRL, permitiendo el registro, la aprobación, el
 cálculo de pago, el control de saldo y la generación de reportes.
 
 ## 9. Objetivos específicos

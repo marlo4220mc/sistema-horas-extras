@@ -36,7 +36,7 @@ soluciones que satisfagan necesidades específicas).
 
 | Requisito | Qué exige | Cómo lo cumplirá el proyecto |
 |-----------|-----------|------------------------------|
-| **Empresa real (problema real)** | Problema identificable en un proceso de negocio. | Empresa `[NOMBRE DE LA EMPRESA]` con el problema de control de horas extras y compensadas. |
+| **Empresa real (problema real)** | Problema identificable en un proceso de negocio. | Empresa `Fábrica Marsar SRL` con el problema de control de horas extras y compensadas. |
 | **Programa orientado a objetos** | Clases, objetos, herencia, polimorfismo. | 14 clases en los paquetes `modelo` y `servicio`. |
 | **10 a 15 clases** | Mínimo 10 y máximo 15 clases. | **14 clases principales** (11 de `modelo` + 3 de `servicio`), más `Main`, la enumeración `EstadoSolicitud` y 7 excepciones personalizadas. |
 | **Colecciones tipo lista** | Uso real de listas. | `list[Empleado]`, `list[RegistroHora]` y `list[Solicitud]`. |

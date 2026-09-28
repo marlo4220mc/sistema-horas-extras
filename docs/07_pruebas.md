@@ -52,7 +52,7 @@ OK
 ## Cómo ejecutar las pruebas
 
 ```bash
-cd SistemaHorasExtras
+cd sistema-horas-extras
 ./scripts/test.sh
 ```
 

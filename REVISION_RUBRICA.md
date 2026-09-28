@@ -141,13 +141,16 @@ con placeholders. No se inventó información:
 
 | Pendiente | Dónde | Qué falta |
 |-----------|-------|-----------|
-| Nombres de los integrantes | `docs/informe_final.md` (carátula) | `[INTEGRANTE 1..4]` |
-| Nombre del docente | carátula | `[DOCENTE]` |
-| Nombre de la empresa | informe y docs | `[NOMBRE DE LA EMPRESA]` |
-| Capturas de evidencias | Anexos 1–6 | `[INSERTAR CAPTURA]` |
+| Capturas del sistema y de las pruebas | Anexos 2, 3, 4 y 7 | Faltan esas capturas de pantalla |
 | Nombre del archivo de entrega | — | `GRUPO_XX_TP_FP2_Ciclo` (definido por el grupo) |
-| Actualizar el índice del DOCX | `docs/Trabajo_Parcial_FP2.docx` | Abrir en Word y actualizar el campo TOC |
 
+> El Anexo 1 ya tiene las 8 capturas de coordinación (Drive y WhatsApp).
+> El índice quedó escrito en texto plano con los números de página (17 en total),
+> sin campos que haya que actualizar.
+>
+> Los integrantes (3), el docente y la empresa (**Fábrica Marsar SRL**) ya están
+> completados en la carátula, el informe y el código.
+>
 > El nombre de la universidad (**UPC**) y su logo se tomaron del enunciado
 > oficial `docs/enunciado_oficial.docx` (logo con descripción "upc logo" y
 > propiedad `Company = UPC`), por lo que ya no son un placeholder.

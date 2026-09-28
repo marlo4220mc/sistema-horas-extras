@@ -19,7 +19,7 @@ biblioteca estándar de Python.
 
 ## Problema
 
-En la empresa [NOMBRE DE LA EMPRESA] el control de horas extras y compensadas
+En la empresa Fábrica Marsar SRL el control de horas extras y compensadas
 se hacía en papel y planillas sueltas: la información quedaba dispersa, había
 errores de cálculo, no se conocía el saldo real de horas y no se podía
 auditar lo pagado en el mes. El detalle está en `docs/01_problema_real.md`.
@@ -94,7 +94,7 @@ SistemaHorasExtras/
 
 ```bash
 git clone https://github.com/marlo4220mc/sistema-horas-extras
-cd SistemaHorasExtras
+cd sistema-horas-extras
 ```
 
 ## Ejecución
@@ -156,12 +156,11 @@ El cronograma y la asignación de actividades se gestionan en un tablero de Trel
 
 ## Autores
 
-- [INTEGRANTE 1]
-- [INTEGRANTE 2]
-- [INTEGRANTE 3]
-- [INTEGRANTE 4]
-
-**Docente:** [DOCENTE]
+- Marlon James Castro Castro
+- Fatima Auris Aliaga
+- Victor Hugo López Sobrado
+- 
+**Docente:** Chahuas Rebatta, César Eduardo
 
 ## Licencia
 
