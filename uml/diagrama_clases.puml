@@ -148,8 +148,9 @@ package servicio {
     + listar_empleados() : list[Empleado]
     + registrar_solicitud_hora_extra(...) : SolicitudHoraExtra
     + buscar_solicitud(id : str) : Solicitud
-    + aprobar_solicitud(id : str, usuario : str) : Solicitud
-    + rechazar_solicitud(id : str, motivo : str, usuario : str) : Solicitud
+    + aprobar_solicitud(id : str, codigo_aprobador : str) : Solicitud
+    + rechazar_solicitud(id : str, motivo : str, codigo_aprobador : str) : Solicitud
+    + _validar_supervisor(codigo : str) : Supervisor
     + pagar_solicitud(id : str, usuario : str) : SolicitudHoraExtra
     + compensar_solicitud_hora_extra(id : str, usuario : str) : SolicitudHoraExtra
     + registrar_horas_compensadas(...) : HoraCompensada
@@ -177,6 +178,7 @@ package excepciones {
   class SaldoInsuficienteError
   class SolicitudNoEncontradaError
   class EstadoSolicitudInvalidaError
+  class AprobacionNoAutorizadaError
 }
 
 class Main {
@@ -214,5 +216,6 @@ GestorHorasExtras ..> HorasInvalidasError
 GestorHorasExtras ..> SaldoInsuficienteError
 GestorHorasExtras ..> SolicitudNoEncontradaError
 GestorHorasExtras ..> EstadoSolicitudInvalidaError
+GestorHorasExtras ..> AprobacionNoAutorizadaError
 
 @enduml

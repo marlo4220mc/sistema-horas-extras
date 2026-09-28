@@ -106,8 +106,9 @@ para que el pago o la compensación puedan continuar.
 
 - Solo se pueden aprobar solicitudes en estado `PENDIENTE`.
 - Una solicitud ya procesada no se puede aprobar otra vez.
+- Solo un **supervisor registrado** puede aprobar: el sistema valida el código de quien aprueba.
 
-**Implementación:** `aprobar_solicitud(id, usuario)` · Menú opción 6
+**Implementación:** `aprobar_solicitud(id, codigo_aprobador)` · Menú opción 6
 
 ---
 
@@ -123,8 +124,9 @@ para dejar constancia de por qué no se reconoce.
 
 - El motivo es obligatorio.
 - Solo se rechazan solicitudes en estado `PENDIENTE`.
+- Solo un **supervisor registrado** puede rechazar.
 
-**Implementación:** `rechazar_solicitud(id, motivo, usuario)` · Menú opción 7
+**Implementación:** `rechazar_solicitud(id, motivo, codigo_aprobador)` · Menú opción 7
 
 ---
 

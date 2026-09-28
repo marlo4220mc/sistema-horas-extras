@@ -28,3 +28,7 @@ class SolicitudNoEncontradaError(Exception):
 
 class EstadoSolicitudInvalidaError(Exception):
     """Se lanza cuando el cambio de estado de una solicitud no esta permitido."""
+
+
+class AprobacionNoAutorizadaError(Exception):
+    """Se lanza cuando quien intenta aprobar o rechazar no es un supervisor."""

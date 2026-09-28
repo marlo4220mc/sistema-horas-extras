@@ -30,7 +30,7 @@ que están en `src/`.
 | 14 | `MenuConsola` | servicio | concreta |
 | — | `EstadoSolicitud` | modelo | enumeración |
 | — | `Main` | — | punto de entrada |
-| — | 6 excepciones | excepciones | heredan de `Exception` |
+| — | 7 excepciones | excepciones | heredan de `Exception` |
 
 **Total: 14 clases principales**, dentro del rango de 10 a 15 clases exigido.
 
@@ -69,6 +69,7 @@ Solicitud ←── SolicitudHoraExtra
 | `MenuConsola` — `GestorHorasExtras` | 1 → 1 | asociación | El menú invoca al gestor. |
 | `Main` — `MenuConsola` | 1 → 1 | asociación | `main` inicia el menú. |
 | `GestorHorasExtras` — excepciones | — | dependencia | Lanza las excepciones de negocio. |
+| `GestorHorasExtras` — `Supervisor` | — | regla | `_validar_supervisor()`: solo un supervisor aprueba o rechaza. |
 
 ---
 

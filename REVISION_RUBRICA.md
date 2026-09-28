@@ -26,8 +26,8 @@
 | Herencia | Sí | 3 jerarquías reales | `docs/05_diseno_clases.md` |
 | Polimorfismo | Sí | `calcular_valor()`, `calcular_monto()`, `obtener_rol()` | `src/modelo/`, `docs/06_uml.md` |
 | Encapsulamiento | Sí | Atributos `_privados` + `@property` con validación | `src/modelo/*.py` |
-| Pruebas de métodos de negocio | Sí | 21 pruebas con `unittest`, 21 correctas | `test/test_sistema.py`, `salida/pruebas_unittest.txt` |
-| Control de excepciones | Sí | 6 excepciones propias + `ValueError` | `src/excepciones/excepciones.py` |
+| Pruebas de métodos de negocio | Sí | 23 pruebas con `unittest`, 23 correctas | `test/test_sistema.py`, `salida/pruebas_unittest.txt` |
+| Control de excepciones | Sí | 7 excepciones propias + `ValueError` | `src/excepciones/excepciones.py` |
 | Validaciones | Sí | Texto, números, salario, horas, duplicados, saldo, estados, fechas | `docs/05_diseno_clases.md` §7 |
 | Informe con la estructura oficial | Sí | Carátula (con logo UPC), índice, introducción, capítulos, bibliografía, anexos; encabezado, numeración de páginas y figuras numeradas | `docs/informe_final.md`, `docs/Trabajo_Parcial_FP2.docx` |
 | Bibliografía en formato APA | Sí | 8 fuentes reales en APA 7 | `docs/informe_final.md` §F |
@@ -74,7 +74,7 @@
 | 2 | Funcionalidades de control y cálculos | Sí | Aprobación, saldo, `CalculadoraHoras` |
 | 3 | Diagrama de clases UML | Sí | `uml/diagrama_clases.puml` |
 | 4 | POO: clase, relaciones, herencia, polimorfismo | Sí | `docs/05_diseno_clases.md` |
-| 5 | Pruebas de métodos de negocio | Sí | `unittest` — 21/21 |
+| 5 | Pruebas de métodos de negocio | Sí | `unittest` — 23/23 |
 | 6 | Control de excepciones de los datos | Sí | `src/excepciones/` + `try/except` en el menú |
 
 ---
@@ -83,7 +83,7 @@
 
 | Verificación | Comando | Resultado |
 |--------------|---------|-----------|
-| Pruebas unitarias | `./scripts/test.sh` | `Ran 21 tests`, `OK` (0 fallos) |
+| Pruebas unitarias | `./scripts/test.sh` | `Ran 23 tests`, `OK` (0 fallos) |
 | Ejecución del menú | `python3 src/main.py` | Ejecución completa sin cierres inesperados — `salida/ejecucion_menu.txt` |
 | Robustez ante errores | Entradas inválidas en el menú | Se muestran mensajes de error y el programa continúa |
 

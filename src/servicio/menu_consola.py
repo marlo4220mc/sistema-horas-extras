@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import date, datetime
 
 from excepciones import (
+    AprobacionNoAutorizadaError,
     EmpleadoDuplicadoError,
     EmpleadoNoEncontradoError,
     EstadoSolicitudInvalidaError,
@@ -15,6 +16,7 @@ from excepciones import (
 from modelo.estado_solicitud import EstadoSolicitud
 from modelo.registro_hora import RegistroHora
 from modelo.solicitud import Solicitud
+from modelo.supervisor import Supervisor
 from servicio.gestor_horas_extras import GestorHorasExtras
 
 
@@ -299,6 +301,35 @@ class MenuConsola:
             return id_solicitud
         return ""
 
+    def _mostrar_supervisores(self) -> None:
+        """Muestra los supervisores registrados para facilitar la eleccion."""
+        supervisores = self._gestor.listar_empleados_por_rol("Supervisor")
+        if supervisores:
+            lista = ", ".join(
+                f"{s.codigo_empleado} ({s.nombre_completo})" for s in supervisores
+            )
+            print(f"  Supervisores registrados: {lista}")
+
+    def _leer_supervisor(self, etiqueta: str) -> str:
+        """Pide el codigo de quien aprueba y valida de inmediato que sea supervisor."""
+        while not self._entrada_agotada:
+            codigo = self._leer_texto(etiqueta)
+            if self._entrada_agotada or not codigo:
+                return ""
+            try:
+                empleado = self._gestor.buscar_empleado_por_codigo(codigo)
+            except EmpleadoNoEncontradoError:
+                print(f"  ! No existe el empleado con codigo {codigo}. Ingrese otro codigo.")
+                continue
+            if not isinstance(empleado, Supervisor):
+                print(
+                    f"  ! {empleado.nombre_completo} no es supervisor "
+                    f"(rol: {empleado.obtener_rol()}). Ingrese otro codigo."
+                )
+                continue
+            return codigo
+        return ""
+
     def _buscar_empleado(self) -> None:
         print("\n--- BUSCAR EMPLEADO ---")
         print("1. Por codigo   2. Por documento   3. Por apellido")
@@ -375,10 +406,17 @@ class MenuConsola:
             id_solicitud = self._leer_solicitud_pendiente("Id de la solicitud (ej. SOL-001): ")
             if self._entrada_agotada:
                 return
-            usuario = self._leer_texto("Usuario que aprueba: ")
-            solicitud = self._gestor.aprobar_solicitud(id_solicitud, usuario)
-            print(f"  OK. La solicitud {solicitud.id} quedo {solicitud.estado.value}.")
-        except (SolicitudNoEncontradaError, EstadoSolicitudInvalidaError) as error:
+            self._mostrar_supervisores()
+            codigo = self._leer_supervisor("Codigo del supervisor que aprueba: ")
+            if self._entrada_agotada:
+                return
+            solicitud = self._gestor.aprobar_solicitud(id_solicitud, codigo)
+            print(
+                f"  OK. La solicitud {solicitud.id} quedo {solicitud.estado.value} "
+                f"(aprobada por {codigo})."
+            )
+        except (SolicitudNoEncontradaError, EstadoSolicitudInvalidaError,
+                AprobacionNoAutorizadaError) as error:
             print(f"  ! {error}")
 
     def _rechazar_solicitud(self) -> None:
@@ -388,10 +426,17 @@ class MenuConsola:
             if self._entrada_agotada:
                 return
             motivo = self._leer_texto("Motivo del rechazo: ")
-            usuario = self._leer_texto("Usuario que rechaza: ")
-            solicitud = self._gestor.rechazar_solicitud(id_solicitud, motivo, usuario)
-            print(f"  OK. La solicitud {solicitud.id} quedo {solicitud.estado.value}.")
-        except (SolicitudNoEncontradaError, EstadoSolicitudInvalidaError) as error:
+            self._mostrar_supervisores()
+            codigo = self._leer_supervisor("Codigo del supervisor que rechaza: ")
+            if self._entrada_agotada:
+                return
+            solicitud = self._gestor.rechazar_solicitud(id_solicitud, motivo, codigo)
+            print(
+                f"  OK. La solicitud {solicitud.id} quedo {solicitud.estado.value} "
+                f"(rechazada por {codigo})."
+            )
+        except (SolicitudNoEncontradaError, EstadoSolicitudInvalidaError,
+                AprobacionNoAutorizadaError) as error:
             print(f"  ! {error}")
 
     def _calcular_pago(self) -> None:

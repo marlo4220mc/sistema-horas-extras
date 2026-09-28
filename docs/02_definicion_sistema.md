@@ -35,7 +35,7 @@ compensadas de los empleados de [NOMBRE DE LA EMPRESA].
 | Rol | Descripción |
 |-----|-------------|
 | **Responsable de RR. HH.** | Registra empleados, aprueba o rechaza solicitudes, consulta reportes. |
-| **Supervisor** | Revisa y gestiona solicitudes de su área. |
+| **Supervisor** | Aprueba o rechaza solicitudes; solo un supervisor puede hacerlo. |
 | **Empleado** | Origen de las solicitudes y de las horas compensadas. |
 
 > Nota: el sistema identifica el rol con `obtener_rol()`, pero como el
@@ -98,6 +98,7 @@ compensadas de los empleados de [NOMBRE DE LA EMPRESA].
 | RN10 | No se pueden utilizar más horas compensadas que el saldo disponible. |
 | RN11 | Toda entrada numérica debe validarse: no se aceptan números negativos ni cero donde la regla diga "mayor que cero". |
 | RN12 | No se procesa ninguna operación si la entidad referenciada (empleado o solicitud) no existe. |
+| RN13 | Solo un **supervisor registrado** puede aprobar o rechazar una solicitud; si quien lo intenta no es supervisor, la operación se rechaza. |
 
 ## 7. Arquitectura lógica
 
@@ -144,4 +145,4 @@ compensadas de los empleados de [NOMBRE DE LA EMPRESA].
 - Las validaciones evitan que el sistema registre datos inválidos.
 - Las horas compensadas mantienen un saldo consistente.
 - El sistema no termina abruptamente cuando el usuario ingresa datos inválidos.
-- Las 21 pruebas unitarias pasan.
+- Las 23 pruebas unitarias pasan.

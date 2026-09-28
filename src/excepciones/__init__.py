@@ -1,6 +1,7 @@
 """Paquete de excepciones personalizadas del sistema."""
 
 from excepciones.excepciones import (
+    AprobacionNoAutorizadaError,
     EmpleadoDuplicadoError,
     EmpleadoNoEncontradoError,
     EstadoSolicitudInvalidaError,
@@ -10,6 +11,7 @@ from excepciones.excepciones import (
 )
 
 __all__ = [
+    "AprobacionNoAutorizadaError",
     "EmpleadoDuplicadoError",
     "EmpleadoNoEncontradoError",
     "EstadoSolicitudInvalidaError",

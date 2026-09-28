@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import date
 
 from excepciones import (
+    AprobacionNoAutorizadaError,
     EmpleadoDuplicadoError,
     EmpleadoNoEncontradoError,
     HorasInvalidasError,
@@ -197,15 +198,33 @@ class GestorHorasExtras:
                 return solicitud
         raise SolicitudNoEncontradaError(f"No existe la solicitud {id_solicitud}.")
 
-    def aprobar_solicitud(self, id_solicitud: str, usuario: str) -> Solicitud:
+    def aprobar_solicitud(self, id_solicitud: str, codigo_aprobador: str) -> Solicitud:
+        """Aprueba una solicitud. Solo un supervisor registrado puede hacerlo."""
         solicitud = self.buscar_solicitud(id_solicitud)
-        solicitud.aprobar(usuario)
+        self._validar_supervisor(codigo_aprobador)
+        solicitud.aprobar(codigo_aprobador)
         return solicitud
 
-    def rechazar_solicitud(self, id_solicitud: str, motivo: str, usuario: str) -> Solicitud:
+    def rechazar_solicitud(self, id_solicitud: str, motivo: str, codigo_aprobador: str) -> Solicitud:
+        """Rechaza una solicitud. Solo un supervisor registrado puede hacerlo."""
         solicitud = self.buscar_solicitud(id_solicitud)
-        solicitud.rechazar(motivo, usuario)
+        self._validar_supervisor(codigo_aprobador)
+        solicitud.rechazar(motivo, codigo_aprobador)
         return solicitud
+
+    def _validar_supervisor(self, codigo_aprobador: str) -> Supervisor:
+        """Busca al empleado que intenta aprobar y verifica que sea supervisor.
+
+        Si el empleado no existe lanza EmpleadoNoEncontradoError; si existe
+        pero no es supervisor lanza AprobacionNoAutorizadaError.
+        """
+        empleado = self.buscar_empleado_por_codigo(codigo_aprobador)
+        if not isinstance(empleado, Supervisor):
+            raise AprobacionNoAutorizadaError(
+                f"Solo un supervisor puede aprobar o rechazar solicitudes. "
+                f"{empleado.codigo_empleado} ({empleado.obtener_rol()}) no es supervisor."
+            )
+        return empleado
 
     def pagar_solicitud(self, id_solicitud: str, usuario: str) -> SolicitudHoraExtra:
         """Paga una solicitud de horas extras ya aprobada."""

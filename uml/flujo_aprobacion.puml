@@ -6,14 +6,20 @@ start
 :Buscar solicitud en list[Solicitud];
 if (Existe la solicitud?) then (si)
   if (Estado actual = PENDIENTE?) then (si)
+    :Ingresar codigo de quien aprueba;
+    :Buscar al empleado en list[Empleado];
+    if (Es un Supervisor?) then (si)
     if (Decision?) then (aprobar)
       :Cambiar estado a APROBADA;
     else (rechazar)
       :Ingresar motivo;
       :Cambiar estado a RECHAZADA;
     endif
-    :Registrar usuario y fecha de resolucion;
+    :Registrar codigo del supervisor y fecha;
     :Mostrar confirmacion;
+    else (no)
+      :Lanzar AprobacionNoAutorizadaError\n(solo un supervisor aprueba);
+    endif
   else (no)
     :Lanzar EstadoSolicitudInvalidaError\n(no se puede procesar dos veces);
   endif

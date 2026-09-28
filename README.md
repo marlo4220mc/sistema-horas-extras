@@ -116,7 +116,7 @@ ficticios) para poder probar todas las opciones de inmediato.
 python3 -m unittest discover -s test -p "test_*.py" -v
 ```
 
-Resultado actual: **21 pruebas ejecutadas, 21 correctas, 0 fallidas**.
+Resultado actual: **23 pruebas ejecutadas, 23 correctas, 0 fallidas**.
 Ver `docs/07_pruebas.md`.
 
 ## UML

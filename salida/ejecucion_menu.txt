@@ -46,65 +46,13 @@ Seleccione una opcion:   ! Opcion no valida. Ingrese un numero del 0 al 13.
  0. Salir
 ========================================================
 Seleccione una opcion: 
---- REGISTRAR EMPLEADO ---
-Codigo de empleado (ej. E006):   ! Ya existe un empleado con el codigo E001. Ingrese otro codigo.
-Codigo de empleado (ej. E006): Nombres: Apellidos: Tipo de documento (DNI/CE): Numero de documento:   ! Ya existe un empleado con el documento 10000001. Ingrese otro documento.
-Numero de documento: Correo:   ! El correo no es valido (ej. nombre@empresa.com).
-Correo: Salario mensual:   ! El salario debe ser mayor a cero.
-Salario mensual: Cargo: Fecha de ingreso (dd/mm/aaaa):   ! La fecha de ingreso no puede ser futura.
-Fecha de ingreso (dd/mm/aaaa):   OK. Empleado registrado: E007 | Pedro Salas | DNI 10000007 | Tecnico de soporte | Salario: 3100.00 | Valor hora: 12.92 | Saldo: 0.00 h
-
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
---- BUSCAR EMPLEADO ---
-1. Por codigo   2. Por documento   3. Por apellido
-Criterio:   ! Debe ingresar un numero entero.
-Criterio: Codigo:   ! No existe el empleado con codigo E999.
-
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
 --- LISTA DE EMPLEADOS ---
   E001 | Juan Perez | DNI 10000001 | Analista de sistemas | Salario: 3000.00 | Valor hora: 12.50 | Saldo: 5.00 h
   E002 | Maria Lopez | DNI 10000002 | Asistente administrativa | Salario: 2500.00 | Valor hora: 10.42 | Saldo: 0.00 h
   E003 | Carlos Ramirez | DNI 10000003 | Jefe de operaciones | Salario: 4200.00 | Valor hora: 17.50 | Saldo: 0.00 h
   E004 | Ana Torres | DNI 10000004 | Supervisora de RR. HH. | Salario: 5200.00 | Valor hora: 21.67 | Saldo: 0.00 h | Rol: Supervisor | Area: Recursos Humanos | Limite: 10.0 h
   E005 | Luis Gomez | DNI 10000005 | Responsable de RR. HH. | Salario: 6000.00 | Valor hora: 25.00 | Saldo: 0.00 h | Rol: Responsable de RR.HH. | Responsabilidad: Gestion de personal
-  E007 | Pedro Salas | DNI 10000007 | Tecnico de soporte | Salario: 3100.00 | Valor hora: 12.92 | Saldo: 0.00 h
-  Total: 6 empleado(s).
+  Total: 5 empleado(s).
 
 ========================================================
                   MENU PRINCIPAL
@@ -126,11 +74,7 @@ Seleccione una opcion:
 ========================================================
 Seleccione una opcion: 
 --- REGISTRAR HORAS EXTRAS ---
-Codigo del empleado:   ! No existe el empleado con codigo E999. Ingrese otro codigo.
-Codigo del empleado: Fecha en que se trabajo (dd/mm/aaaa):   ! La fecha en que se trabajo no puede ser futura.
-Fecha en que se trabajo (dd/mm/aaaa): Cantidad de horas:   ! Las horas deben ser mayores a 0 y como maximo 24.
-Cantidad de horas:   ! Las horas deben ser mayores a 0 y como maximo 24.
-Cantidad de horas: Motivo:   OK. Solicitud registrada: SOL-005 | Estado: PENDIENTE | Pago calculado: S/ 78.13
+Codigo del empleado: Fecha en que se trabajo (dd/mm/aaaa): Cantidad de horas: Motivo:   OK. Solicitud registrada: SOL-005 | Estado: PENDIENTE | Pago calculado: S/ 93.75
 
 ========================================================
                   MENU PRINCIPAL
@@ -156,7 +100,7 @@ Seleccione una opcion:
   SOL-002  | Solicitud hora extra     | E002   | PENDIENTE  | S/     62.50
   SOL-003  | Solicitud hora extra     | E003   | RECHAZADA  | S/     78.75
   SOL-004  | Solicitud compensacion   | E001   | APROBADA   | S/     37.50
-  SOL-005  | Solicitud hora extra     | E002   | PENDIENTE  | S/     78.13
+  SOL-005  | Solicitud hora extra     | E002   | PENDIENTE  | S/     93.75
 
 ========================================================
                   MENU PRINCIPAL
@@ -178,9 +122,9 @@ Seleccione una opcion:
 ========================================================
 Seleccione una opcion: 
 --- APROBAR SOLICITUD ---
-Id de la solicitud (ej. SOL-001):   ! La solicitud SOL-001 ya esta en estado APROBADA y no se puede procesar.
-Id de la solicitud (ej. SOL-001):   ! No existe la solicitud SOL-999. Ingrese otro id.
-Id de la solicitud (ej. SOL-001): Usuario que aprueba:   OK. La solicitud SOL-002 quedo APROBADA.
+Id de la solicitud (ej. SOL-001):   Supervisores registrados: E004 (Ana Torres)
+Codigo del supervisor que aprueba:   ! Juan Perez no es supervisor (rol: Empleado). Ingrese otro codigo.
+Codigo del supervisor que aprueba:   OK. La solicitud SOL-002 quedo APROBADA (aprobada por E004).
 
 ========================================================
                   MENU PRINCIPAL
@@ -202,7 +146,9 @@ Id de la solicitud (ej. SOL-001): Usuario que aprueba:   OK. La solicitud SOL-00
 ========================================================
 Seleccione una opcion: 
 --- RECHAZAR SOLICITUD ---
-Id de la solicitud: Motivo del rechazo: Usuario que rechaza:   OK. La solicitud SOL-005 quedo RECHAZADA.
+Id de la solicitud: Motivo del rechazo:   Supervisores registrados: E004 (Ana Torres)
+Codigo del supervisor que rechaza:   ! Maria Lopez no es supervisor (rol: Empleado). Ingrese otro codigo.
+Codigo del supervisor que rechaza:   OK. La solicitud SOL-005 quedo RECHAZADA (rechazada por E004).
 
 ========================================================
                   MENU PRINCIPAL
@@ -250,193 +196,20 @@ Id de la solicitud:   Empleado......: Juan Perez
 ========================================================
 Seleccione una opcion: 
 --- REGISTRAR HORAS COMPENSADAS ---
-Codigo del empleado: Fecha (dd/mm/aaaa):   ! La fecha no puede ser futura.
-Fecha (dd/mm/aaaa): Cantidad de horas a otorgar:   ! Las horas deben ser mayores a 0 y como maximo 24.
-Cantidad de horas a otorgar: Motivo:   OK. Horas compensadas registradas. Nuevo saldo: 6.0 h
+Codigo del empleado: Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa):   ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
+Fecha (dd/mm/aaaa): 
+  ! Fecha invalida. Use dd/mm/aaaa (ej. 15/09/2026).
 
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
---- CONSULTAR SALDO ---
-Codigo del empleado:   Empleado: Maria Lopez
-  Saldo de horas compensadas: 6.0 h
-
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
---- UTILIZAR HORAS COMPENSADAS ---
-Codigo del empleado: Horas a utilizar:   ! Saldo insuficiente: dispone de 6.00 h. Ingrese una cantidad menor.
-Horas a utilizar: Motivo:   OK. Uso de horas compensadas registrado en la solicitud SOL-006.
-  Nuevo saldo: 4.0 h
-
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
---- HISTORIAL POR EMPLEADO ---
-Codigo del empleado:   Empleado: Juan Perez
-  --- Movimientos de horas ---
-  RH-001   | E001   | 2026-09-10 |  6.00 h | Hora extra       | S/   112.50 | Cierre de inventario
-  RH-004   | E001   | 2026-09-12 |  8.00 h | Hora comp. otorg. | S/   100.00 | Compensacion por horas extras de la semana
-  RH-005   | E001   | 2026-09-27 |  3.00 h | Hora comp. usada | S/    37.50 | Tramite personal autorizado
-  --- Solicitudes ---
-  SOL-001  | Solicitud hora extra     | E001   | APROBADA   | S/    112.50
-  SOL-004  | Solicitud compensacion   | E001   | APROBADA   | S/     37.50
-
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
---- REPORTES ---
-1. Reporte general
-2. Horas extras por empleado
-3. Horas extras (registros)
-4. Horas compensadas (registros)
-5. Saldo de horas compensadas
-6. Solicitudes pendientes
-7. Total a pagar / pagado
-0. Volver al menu principal
-Reporte: ================ REPORTE GENERAL ================
-Empleados registrados......: 6
-Solicitudes registradas....: 6
-Solicitudes pendientes.....: 0
-Total de horas extras......: 18.00 h
-Total a pagar (aprobadas)..: S/ 175.00
-Total pagado...............: S/ 0.00
-Horas comp. otorgadas......: 14.00 h
-Horas comp. utilizadas.....: 5.00 h
-
---- Solicitudes ---
-SOL-001  | Solicitud hora extra     | E001   | APROBADA   | S/    112.50
-SOL-002  | Solicitud hora extra     | E002   | APROBADA   | S/     62.50
-SOL-003  | Solicitud hora extra     | E003   | RECHAZADA  | S/     78.75
-SOL-004  | Solicitud compensacion   | E001   | APROBADA   | S/     37.50
-SOL-005  | Solicitud hora extra     | E002   | RECHAZADA  | S/     78.13
-SOL-006  | Solicitud compensacion   | E002   | APROBADA   | S/     20.83
-
---- REPORTES ---
-1. Reporte general
-2. Horas extras por empleado
-3. Horas extras (registros)
-4. Horas compensadas (registros)
-5. Saldo de horas compensadas
-6. Solicitudes pendientes
-7. Total a pagar / pagado
-0. Volver al menu principal
-Reporte:   ! Opcion no valida.
-
---- REPORTES ---
-1. Reporte general
-2. Horas extras por empleado
-3. Horas extras (registros)
-4. Horas compensadas (registros)
-5. Saldo de horas compensadas
-6. Solicitudes pendientes
-7. Total a pagar / pagado
-0. Volver al menu principal
-Reporte: 
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
---- BUSCAR EMPLEADO ---
-1. Por codigo   2. Por documento   3. Por apellido
-Criterio: Codigo:   E001 | Juan Perez | DNI 10000001 | Analista de sistemas | Salario: 3000.00 | Valor hora: 12.50 | Saldo: 5.00 h
-
-========================================================
-                  MENU PRINCIPAL
-========================================================
- 1. Registrar empleado
- 2. Buscar empleado
- 3. Listar empleados
- 4. Registrar horas extras
- 5. Listar solicitudes
- 6. Aprobar solicitud
- 7. Rechazar solicitud
- 8. Calcular pago de horas extras
- 9. Registrar horas compensadas
-10. Consultar saldo
-11. Utilizar horas compensadas
-12. Historial
-13. Reportes
- 0. Salir
-========================================================
-Seleccione una opcion: 
 Fin de la ejecucion. Gracias por usar el sistema.

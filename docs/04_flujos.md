@@ -111,11 +111,15 @@ Buscar en List<Solicitud>
   ↓ SÍ
 ¿Estado = PENDIENTE? ── NO ─→ EstadoSolicitudInvalidaError → FIN
   ↓ SÍ
+Leer código de quien aprueba y buscar al empleado
+  ↓
+¿Es un Supervisor registrado? ── NO ─→ AprobacionNoAutorizadaError → FIN
+  ↓ SÍ
 ¿APROBAR o RECHAZAR?
   ├── APROBAR  → estado = APROBADA
   └── RECHAZAR → leer motivo → estado = RECHAZADA
   ↓
-Registrar usuario y fecha de resolución
+Registrar el código del supervisor y la fecha de resolución
   ↓
 Mostrar confirmación
   ↓

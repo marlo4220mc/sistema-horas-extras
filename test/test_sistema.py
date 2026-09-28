@@ -11,6 +11,7 @@ from datetime import date, timedelta
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 
 from excepciones import (  # noqa: E402
+    AprobacionNoAutorizadaError,
     EmpleadoDuplicadoError,
     EmpleadoNoEncontradoError,
     EstadoSolicitudInvalidaError,
@@ -28,7 +29,7 @@ from servicio.gestor_horas_extras import GestorHorasExtras  # noqa: E402
 
 
 class PruebasSistema(unittest.TestCase):
-    """Agrupa las 20 pruebas del sistema."""
+    """Agrupa las 23 pruebas del sistema."""
 
     def setUp(self) -> None:
         self.gestor = GestorHorasExtras()
@@ -42,6 +43,11 @@ class PruebasSistema(unittest.TestCase):
             "maria.lopez@empresa-demo.com", 2400.00, "Asistente administrativa",
             date(2022, 8, 15),
         )
+        self.gestor.registrar_supervisor(
+            "E009", "Ana", "Torres", "DNI", "10000009",
+            "ana.torres@empresa-demo.com", 5200.00, "Supervisora de RR. HH.",
+            date(2020, 5, 4), "Recursos Humanos", 10,
+        )
 
     # ------------------------------------------------------------------
     # HU01 - Registrar empleado
@@ -50,7 +56,7 @@ class PruebasSistema(unittest.TestCase):
         empleado = self.gestor.buscar_empleado_por_codigo("E001")
         self.assertEqual("Perez", empleado.apellidos)
         self.assertEqual("Empleado", empleado.obtener_rol())
-        self.assertEqual(2, len(self.gestor.listar_empleados()))
+        self.assertEqual(3, len(self.gestor.listar_empleados()))
         self.assertAlmostEqual(0.0, empleado.saldo_horas_compensadas, places=3)
 
     def test_validacion_empleado_duplicado(self) -> None:
@@ -140,27 +146,47 @@ class PruebasSistema(unittest.TestCase):
         solicitud = self.gestor.registrar_solicitud_hora_extra(
             "E001", date(2026, 9, 10), 6, "Cierre de inventario"
         )
-        self.gestor.aprobar_solicitud(solicitud.id, "E004")
+        self.gestor.aprobar_solicitud(solicitud.id, "E009")
         self.assertEqual(EstadoSolicitud.APROBADA, solicitud.estado)
-        self.assertEqual("E004", solicitud.resuelto_por)
+        self.assertEqual("E009", solicitud.resuelto_por)
         self.assertAlmostEqual(112.5, self.gestor.total_a_pagar(), places=3)
 
     def test_validacion_aprobar_dos_veces(self) -> None:
         solicitud = self.gestor.registrar_solicitud_hora_extra(
             "E001", date(2026, 9, 10), 6, "Cierre de inventario"
         )
-        self.gestor.aprobar_solicitud(solicitud.id, "E004")
+        self.gestor.aprobar_solicitud(solicitud.id, "E009")
         with self.assertRaises(EstadoSolicitudInvalidaError):
-            self.gestor.aprobar_solicitud(solicitud.id, "E004")
+            self.gestor.aprobar_solicitud(solicitud.id, "E009")
 
     def test_hu07_rechazar_solicitud(self) -> None:
         solicitud = self.gestor.registrar_solicitud_hora_extra(
             "E001", date(2026, 9, 10), 6, "Cierre de inventario"
         )
-        self.gestor.rechazar_solicitud(solicitud.id, "No autorizado por el jefe", "E004")
+        self.gestor.rechazar_solicitud(solicitud.id, "No autorizado por el jefe", "E009")
         self.assertEqual(EstadoSolicitud.RECHAZADA, solicitud.estado)
         self.assertIn("No autorizado", solicitud.observacion)
         self.assertAlmostEqual(0.0, self.gestor.total_a_pagar(), places=3)
+
+    def test_validacion_aprobador_no_supervisor(self) -> None:
+        """Solo un supervisor puede aprobar o rechazar (regla de negocio)."""
+        solicitud = self.gestor.registrar_solicitud_hora_extra(
+            "E001", date(2026, 9, 10), 6, "Cierre de inventario"
+        )
+        # E001 y E002 existen, pero son empleados (no supervisores).
+        with self.assertRaises(AprobacionNoAutorizadaError):
+            self.gestor.aprobar_solicitud(solicitud.id, "E001")
+        with self.assertRaises(AprobacionNoAutorizadaError):
+            self.gestor.rechazar_solicitud(solicitud.id, "No corresponde", "E002")
+        # La solicitud debe seguir pendiente.
+        self.assertEqual(EstadoSolicitud.PENDIENTE, solicitud.estado)
+
+    def test_validacion_aprobador_inexistente(self) -> None:
+        solicitud = self.gestor.registrar_solicitud_hora_extra(
+            "E001", date(2026, 9, 10), 6, "Cierre de inventario"
+        )
+        with self.assertRaises(EmpleadoNoEncontradoError):
+            self.gestor.aprobar_solicitud(solicitud.id, "E999")
 
     def test_hu05_solicitud_inexistente(self) -> None:
         with self.assertRaises(SolicitudNoEncontradaError):
@@ -217,11 +243,7 @@ class PruebasSistema(unittest.TestCase):
         self.assertEqual("Hora comp. otorg.", movimientos[1].obtener_tipo())
 
     def test_polimorfismo_obtener_rol(self) -> None:
-        supervisor = self.gestor.registrar_supervisor(
-            "E010", "Ana", "Torres", "DNI", "10000010",
-            "ana.torres@empresa-demo.com", 5200.00, "Supervisora",
-            date(2020, 5, 4), "Recursos Humanos", 10,
-        )
+        supervisor = self.gestor.buscar_empleado_por_codigo("E009")
         por_rol = self.gestor.listar_empleados_por_rol("Supervisor")
         self.assertEqual(1, len(por_rol))
         self.assertEqual("Supervisor", por_rol[0].obtener_rol())
@@ -263,7 +285,7 @@ class PruebasSistema(unittest.TestCase):
         pagar = self.gestor.registrar_solicitud_hora_extra(
             "E001", date(2026, 9, 10), 6, "Cierre"
         )
-        self.gestor.aprobar_solicitud(pagar.id, "E004")
+        self.gestor.aprobar_solicitud(pagar.id, "E009")
         self.gestor.pagar_solicitud(pagar.id, "E005")
         self.assertEqual(EstadoSolicitud.PAGADA, pagar.estado)
         self.assertAlmostEqual(112.5, self.gestor.total_pagado(), places=3)
@@ -272,7 +294,7 @@ class PruebasSistema(unittest.TestCase):
         compensar = self.gestor.registrar_solicitud_hora_extra(
             "E002", date(2026, 9, 14), 4, "Mantenimiento"
         )
-        self.gestor.aprobar_solicitud(compensar.id, "E004")
+        self.gestor.aprobar_solicitud(compensar.id, "E009")
         self.gestor.compensar_solicitud_hora_extra(compensar.id, "E005")
         self.assertEqual(EstadoSolicitud.COMPENSADA, compensar.estado)
         self.assertAlmostEqual(4.0, self.gestor.consultar_saldo("E002"), places=3)

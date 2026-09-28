@@ -20,7 +20,7 @@ dentro del rango de 10 a 15 pedido por el enunciado. A ellas se suman:
 
 - 1 punto de entrada: `main.py` (función `main`).
 - 1 enumeración: `EstadoSolicitud`.
-- 6 excepciones personalizadas (requisito explícito del enunciado).
+- 7 excepciones personalizadas (requisito explícito del enunciado).
 
 Ninguna clase se creó solo para aumentar el conteo: cada una tiene una
 responsabilidad distinta y se usa en la lógica real.
@@ -228,6 +228,9 @@ usa `obtener_rol()` para filtrar, sin usar `isinstance`.
   `_solicitudes: list[Solicitud]`, `_calculadora: CalculadoraHoras`.
 - **Métodos:** registro, búsqueda, listado, aprobación, pago, compensación,
   consulta de saldo, historial y reportes (ver UML).
+- **Regla de aprobación:** antes de aprobar o rechazar valida, con
+  `_validar_supervisor(codigo)`, que el empleado indicado exista y sea un
+  `Supervisor`; si no lo es, lanza `AprobacionNoAutorizadaError`.
 
 ### 5.15 `MenuConsola` — servicio
 
@@ -246,8 +249,9 @@ usa `obtener_rol()` para filtrar, sin usar `isinstance`.
 | `SaldoInsuficienteError` | Se piden más horas de las disponibles. |
 | `SolicitudNoEncontradaError` | Solicitud inexistente. |
 | `EstadoSolicitudInvalidaError` | Transición de estado no permitida. |
+| `AprobacionNoAutorizadaError` | Quien intenta aprobar o rechazar no es un supervisor. |
 
-> Las 6 excepciones se agrupan en el módulo `src/excepciones/excepciones.py`.
+> Las 7 excepciones se agrupan en el módulo `src/excepciones/excepciones.py`.
 > Se usa el sufijo `Error` porque es la convención de nombres de Python
 > (PEP 8) para las excepciones.
 
@@ -276,6 +280,7 @@ registro, búsqueda y reportes recorre estas colecciones.
 | `SaldoInsuficienteError` | `consumir_horas_compensadas`, `utilizar_horas_compensadas` | Menú |
 | `SolicitudNoEncontradaError` | `buscar_solicitud` | Menú |
 | `EstadoSolicitudInvalidaError` | `aprobar`, `rechazar`, `pagar`, `compensar` | Menú |
+| `AprobacionNoAutorizadaError` | `_validar_supervisor` (desde `aprobar_solicitud` y `rechazar_solicitud`) | Menú |
 
 Además se usa `ValueError` para validar datos simples (textos vacíos, salario
 negativo, fechas futuras), de modo que no se crean excepciones personalizadas
@@ -291,8 +296,8 @@ resto del formulario. Por ejemplo:
   fecha de ingreso es futura;
 - al registrar horas, avisa si el **empleado no existe**, si la **fecha es
   futura** o si las horas están fuera del rango `0 < h ≤ 24`;
-- al aprobar o rechazar, avisa si la solicitud **no existe** o si **ya fue
-  procesada**;
+- al aprobar o rechazar, avisa si la solicitud **no existe**, si **ya fue
+  procesada** o si quien aprueba **no es un supervisor**;
 - al utilizar horas compensadas, avisa si el saldo es insuficiente al ingresar
   la cantidad (no al final del formulario).
 

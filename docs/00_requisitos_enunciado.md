@@ -38,7 +38,7 @@ soluciones que satisfagan necesidades específicas).
 |-----------|-----------|------------------------------|
 | **Empresa real (problema real)** | Problema identificable en un proceso de negocio. | Empresa `[NOMBRE DE LA EMPRESA]` con el problema de control de horas extras y compensadas. |
 | **Programa orientado a objetos** | Clases, objetos, herencia, polimorfismo. | 14 clases en los paquetes `modelo` y `servicio`. |
-| **10 a 15 clases** | Mínimo 10 y máximo 15 clases. | **14 clases principales** (11 de `modelo` + 3 de `servicio`), más `Main`, la enumeración `EstadoSolicitud` y 6 excepciones personalizadas. |
+| **10 a 15 clases** | Mínimo 10 y máximo 15 clases. | **14 clases principales** (11 de `modelo` + 3 de `servicio`), más `Main`, la enumeración `EstadoSolicitud` y 7 excepciones personalizadas. |
 | **Colecciones tipo lista** | Uso real de listas. | `list[Empleado]`, `list[RegistroHora]` y `list[Solicitud]`. |
 | **Registro** | Dar de alta entidades. | `registrar_empleado`, `registrar_solicitud_hora_extra`, `registrar_horas_compensadas`. |
 | **Búsqueda** | Localizar entidades. | `buscar_empleado_por_codigo`, `buscar_empleado_por_documento`, `buscar_solicitud`. |
@@ -50,8 +50,8 @@ soluciones que satisfagan necesidades específicas).
 | **Herencia** | Jerarquía real. | `Persona → Empleado / Supervisor / ResponsableRRHH`; `RegistroHora → HoraExtra / HoraCompensada`; `Solicitud → SolicitudHoraExtra / SolicitudCompensacion`. |
 | **Polimorfismo** | Comportamiento polimórfico. | `calcular_valor()` en `RegistroHora`; `calcular_monto()` y `detalle()` en `Solicitud`; `obtener_rol()` en `Persona`. |
 | **Encapsulamiento** | Atributos privados con acceso controlado. | Atributos con `_nombre` y `@property` con validación. |
-| **Pruebas** | Pruebas de métodos de negocio. | `unittest` (biblioteca estándar) — `test/test_sistema.py` con 21 pruebas. |
-| **Excepciones** | Control de excepciones de ingreso. | 6 excepciones personalizadas en `src/excepciones/`. |
+| **Pruebas** | Pruebas de métodos de negocio. | `unittest` (biblioteca estándar) — `test/test_sistema.py` con 23 pruebas. |
+| **Excepciones** | Control de excepciones de ingreso. | 7 excepciones personalizadas en `src/excepciones/` (incluye `AprobacionNoAutorizadaError`). |
 | **Informe** | Documento Word con las secciones. | `docs/informe_final.md` y `docs/Trabajo_Parcial_FP2.docx`. |
 | **APA** | Bibliografía en formato APA. | Sección de Bibliografía con fuentes reales. |
 | **Anexos** | Evidencias del equipo, Git, Trello. | Anexos 1 a 8 con placeholders. |

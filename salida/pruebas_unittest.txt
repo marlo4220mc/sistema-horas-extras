@@ -13,6 +13,9 @@ test_hu11_utilizar_horas_compensadas (test_sistema.PruebasSistema.test_hu11_util
 test_polimorfismo_calcular_monto (test_sistema.PruebasSistema.test_polimorfismo_calcular_monto) ... ok
 test_polimorfismo_calcular_valor (test_sistema.PruebasSistema.test_polimorfismo_calcular_valor) ... ok
 test_polimorfismo_obtener_rol (test_sistema.PruebasSistema.test_polimorfismo_obtener_rol) ... ok
+test_validacion_aprobador_inexistente (test_sistema.PruebasSistema.test_validacion_aprobador_inexistente) ... ok
+test_validacion_aprobador_no_supervisor (test_sistema.PruebasSistema.test_validacion_aprobador_no_supervisor)
+Solo un supervisor puede aprobar o rechazar (regla de negocio). ... ok
 test_validacion_aprobar_dos_veces (test_sistema.PruebasSistema.test_validacion_aprobar_dos_veces) ... ok
 test_validacion_datos_empleado (test_sistema.PruebasSistema.test_validacion_datos_empleado) ... ok
 test_validacion_empleado_duplicado (test_sistema.PruebasSistema.test_validacion_empleado_duplicado) ... ok
@@ -21,6 +24,6 @@ test_validacion_horas_invalidas (test_sistema.PruebasSistema.test_validacion_hor
 test_validacion_saldo_insuficiente (test_sistema.PruebasSistema.test_validacion_saldo_insuficiente) ... ok
 
 ----------------------------------------------------------------------
-Ran 21 tests in 0.001s
+Ran 23 tests in 0.001s
 
 OK

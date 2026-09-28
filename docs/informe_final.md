@@ -328,11 +328,14 @@ saldo_nuevo      = saldo − horas_utilizadas   (si horas_utilizadas ≤ saldo)
 
 ### Excepciones
 
-Seis excepciones propias controlan los errores de negocio:
+Siete excepciones propias controlan los errores de negocio:
 `EmpleadoNoEncontradoError`, `EmpleadoDuplicadoError`, `HorasInvalidasError`,
-`SaldoInsuficienteError`, `SolicitudNoEncontradaError` y
-`EstadoSolicitudInvalidaError`. Para los datos simples (texto vacío, salario
-negativo) se usa `ValueError`. El menú captura todas ellas y continúa
+`SaldoInsuficienteError`, `SolicitudNoEncontradaError`,
+`EstadoSolicitudInvalidaError` y `AprobacionNoAutorizadaError`. Esta última
+aplica la regla de que **solo un supervisor registrado puede aprobar o
+rechazar** una solicitud: el gestor busca al empleado que intenta aprobar y, si
+no es supervisor, rechaza la operación. Para los datos simples (texto vacío,
+salario negativo) se usa `ValueError`. El menú captura todas ellas y continúa
 funcionando.
 
 ---
@@ -391,7 +394,7 @@ de una ejecución real está en `salida/ejecucion_menu.txt`.
 
 [INSERTAR CAPTURA]
 
-Resultado de la ejecución con `unittest`: 21 pruebas ejecutadas, 21 correctas,
+Resultado de la ejecución con `unittest`: 23 pruebas ejecutadas, 23 correctas,
 0 fallidas. Detalle en `docs/07_pruebas.md`.
 
 ## ANEXO 5 — UML
