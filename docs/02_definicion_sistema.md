@@ -136,7 +136,7 @@ compensadas de los empleados de [NOMBRE DE LA EMPRESA].
 | Ejecución | `python3 src/main.py` |
 | Pruebas | `unittest` (biblioteca estándar), `python3 -m unittest` |
 | Persistencia | En memoria (sin base de datos) |
-| UML | PlantUML (`.puml`) e imágenes |
+| UML | draw.io (`.drawio`) e imágenes exportadas |
 | Informe | Markdown y documento Word (`.docx`) |
 
 ## 10. Criterios de éxito

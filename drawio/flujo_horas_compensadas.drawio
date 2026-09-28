@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net" agent="Sistema de Horas Extras" type="device">
+  <diagram id="tp-fp2" name="Horas compensadas">
+    <mxGraphModel dx="1100" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="n10" value="INICIO" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1f4e79;fontColor=#ffffff;strokeColor=#1f4e79;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="340" y="40" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="n11" value="Ingresar codigo de empleado, horas y motivo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="130" width="320" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n10" target="n11">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="n12" value="0 &lt; horas &lt;= 24?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="300" y="230" width="240" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n11" target="n12">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="n13" value="Saldo suficiente?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="300" y="390" width="240" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n12" target="n13">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="n14" value="Descontar horas del saldo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="550" width="320" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n13" target="n14">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="n15" value="Registrar HoraCompensada (consumo) y solicitud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="650" width="320" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n14" target="n15">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="n16" value="Mostrar el nuevo saldo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="750" width="320" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n15" target="n16">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="n17" value="FIN" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1f4e79;fontColor=#ffffff;strokeColor=#1f4e79;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="340" y="850" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="e17" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n16" target="n17">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

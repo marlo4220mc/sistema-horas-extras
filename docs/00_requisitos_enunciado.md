@@ -45,7 +45,7 @@ soluciones que satisfagan necesidades específicas).
 | **Listado** | Mostrar todas las entidades. | `listar_empleados`, `listar_solicitudes`, `listar_horas_extras`. |
 | **Cálculos** | Cálculos de negocio. | `valor_hora`, `pago_horas_extras`, `calcular_monto`, totales de reporte. |
 | **Menú** | Menú en consola. | `MenuConsola` con 13 opciones + salir y submenú de reportes. |
-| **UML** | Diagrama de clases. | `uml/diagrama_clases.puml` e imagen en `salida/`. |
+| **UML** | Diagrama de clases. | `drawio/diagrama_clases.drawio` (editable) e imagen en `salida/`. |
 | **Relaciones entre clases** | Asociación, agregación, composición, herencia. | Documentadas en `docs/05_diseno_clases.md` y reflejadas en el UML. |
 | **Herencia** | Jerarquía real. | `Persona → Empleado / Supervisor / ResponsableRRHH`; `RegistroHora → HoraExtra / HoraCompensada`; `Solicitud → SolicitudHoraExtra / SolicitudCompensacion`. |
 | **Polimorfismo** | Comportamiento polimórfico. | `calcular_valor()` en `RegistroHora`; `calcular_monto()` y `detalle()` en `Solicitud`; `obtener_rol()` en `Persona`. |

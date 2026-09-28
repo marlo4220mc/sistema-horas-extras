@@ -244,15 +244,15 @@ error y vuelve al menú, sin cerrarse.
 
 ![Flujo de horas compensadas](../salida/flujo_horas_compensadas.png)
 
-Los diagramas editables están en `uml/flujo_aplicacion.puml`,
-`uml/flujo_registro_horas_extras.puml`, `uml/flujo_aprobacion.puml` y
-`uml/flujo_horas_compensadas.puml`.
+Los diagramas editables están en `drawio/flujo_aplicacion.drawio`,
+`drawio/flujo_registro_horas_extras.drawio`, `drawio/flujo_aprobacion.drawio` y
+`drawio/flujo_horas_compensadas.drawio` (formato draw.io).
 
 ## 3.2 Diagrama de Clases del Modelo
 
 ![Diagrama de clases](../salida/diagrama_clases.png)
 
-El diagrama editable está en `uml/diagrama_clases.puml`.
+El diagrama editable está en `drawio/diagrama_clases.drawio`.
 
 ### Encapsulamiento
 
@@ -401,7 +401,7 @@ Resultado de la ejecución con `unittest`: 23 pruebas ejecutadas, 23 correctas,
 
 [INSERTAR CAPTURA]
 
-Diagrama de clases en `uml/diagrama_clases.puml` e imagen en
+Diagrama de clases en `drawio/diagrama_clases.drawio` e imagen en
 `salida/diagrama_clases.png`.
 
 ## ANEXO 6 — Flujo

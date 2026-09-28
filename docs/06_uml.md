@@ -1,8 +1,9 @@
 # ETAPA 6 — UML
 
-**Archivo PlantUML:** `uml/diagrama_clases.puml`
-**Imagen:** `salida/diagrama_clases.png`
-**Diagrama de casos de uso:** `salida/casos_uso.png`
+**Archivo editable (draw.io):** `drawio/diagrama_clases.drawio`
+**Imagen (exportada de draw.io):** `salida/diagrama_clases.png`
+**Diagrama de casos de uso:** `drawio/casos_uso.drawio` · `salida/casos_uso.png`
+**Versión alternativa:** `uml/diagrama_clases.puml` (PlantUML)
 
 El diagrama de clases se revisó **después** de programar y coincide con el
 código: los nombres de clases, atributos y métodos del `.puml` son los mismos

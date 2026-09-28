@@ -121,11 +121,18 @@ Ver `docs/07_pruebas.md`.
 
 ## UML
 
-- Diagrama de clases: `uml/diagrama_clases.puml` (imagen: `salida/diagrama_clases.png`).
-- Flujo de la aplicación: `uml/flujo_aplicacion.puml`.
-- Casos de uso: `salida/casos_uso.png`.
+Los diagramas están en formato **draw.io** (editables en <https://app.diagrams.net>
+o con la aplicación de escritorio):
 
-Los archivos `.puml` se pueden visualizar en <https://www.plantuml.com/plantuml>.
+- `drawio/diagrama_clases.drawio` — diagrama de clases (imagen: `salida/diagrama_clases.png`).
+- `drawio/casos_uso.drawio` — casos de uso (`salida/casos_uso.png`).
+- `drawio/flujo_aplicacion.drawio` — flujo general (`salida/flujo_aplicacion.png`).
+- `drawio/flujo_registro_horas_extras.drawio` — registro de horas extras.
+- `drawio/flujo_aprobacion.drawio` — aprobación o rechazo.
+- `drawio/flujo_horas_compensadas.drawio` — uso de horas compensadas.
+
+Las imágenes de `salida/` son exportaciones de esos archivos. Se incluye además la
+versión PlantUML (`uml/*.puml`) de los mismos diagramas.
 
 ## Gestión del proyecto
 

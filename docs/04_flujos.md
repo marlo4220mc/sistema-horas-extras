@@ -3,12 +3,12 @@
 Los diagramas se encuentran en formato PlantUML (`.puml`) en la carpeta `uml/`
 y también como imagen en `salida/`.
 
-| Flujo | PlantUML | Imagen |
-|-------|----------|--------|
-| Flujo general | `uml/flujo_aplicacion.puml` | `salida/flujo_aplicacion.png` |
-| Registro de horas extras | `uml/flujo_registro_horas_extras.puml` | `salida/flujo_registro_horas_extras.png` |
-| Aprobación / rechazo | `uml/flujo_aprobacion.puml` | `salida/flujo_aprobacion.png` |
-| Horas compensadas | `uml/flujo_horas_compensadas.puml` | `salida/flujo_horas_compensadas.png` |
+| Flujo | draw.io | Imagen |
+|-------|---------|--------|
+| Flujo general | `drawio/flujo_aplicacion.drawio` | `salida/flujo_aplicacion.png` |
+| Registro de horas extras | `drawio/flujo_registro_horas_extras.drawio` | `salida/flujo_registro_horas_extras.png` |
+| Aprobación / rechazo | `drawio/flujo_aprobacion.drawio` | `salida/flujo_aprobacion.png` |
+| Horas compensadas | `drawio/flujo_horas_compensadas.drawio` | `salida/flujo_horas_compensadas.png` |
 
 ---
 

@@ -21,7 +21,7 @@
 | Funcionalidades de control | Sí | Aprobar, rechazar, pagar, compensar, control de saldo | `src/modelo/solicitud.py`, `src/modelo/empleado.py` |
 | Cálculos específicos | Sí | `valor_hora`, `pago_horas_extras`, `valor_horas_compensadas`, totales | `src/servicio/calculadora_horas.py` |
 | Menú de ejecución | Sí | Menú de 13 opciones + salir y submenú de reportes | `src/servicio/menu_consola.py` |
-| Diagrama de clases UML | Sí | `diagrama_clases.puml` + imagen | `uml/diagrama_clases.puml`, `salida/diagrama_clases.png` |
+| Diagrama de clases UML | Sí | `.drawio` editable + imagen exportada | `drawio/diagrama_clases.drawio`, `salida/diagrama_clases.png` |
 | Relaciones entre clases | Sí | Herencia, composición, agregación, asociación y dependencia | `docs/06_uml.md` |
 | Herencia | Sí | 3 jerarquías reales | `docs/05_diseno_clases.md` |
 | Polimorfismo | Sí | `calcular_valor()`, `calcular_monto()`, `obtener_rol()` | `src/modelo/`, `docs/06_uml.md` |
@@ -72,7 +72,7 @@
 |---|------------------------------|----------|-----------|
 | 1 | Menú de ejecución de las opciones | Sí | `MenuConsola` — 13 opciones + 0 |
 | 2 | Funcionalidades de control y cálculos | Sí | Aprobación, saldo, `CalculadoraHoras` |
-| 3 | Diagrama de clases UML | Sí | `uml/diagrama_clases.puml` |
+| 3 | Diagrama de clases UML | Sí | `drawio/diagrama_clases.drawio` |
 | 4 | POO: clase, relaciones, herencia, polimorfismo | Sí | `docs/05_diseno_clases.md` |
 | 5 | Pruebas de métodos de negocio | Sí | `unittest` — 23/23 |
 | 6 | Control de excepciones de los datos | Sí | `src/excepciones/` + `try/except` en el menú |
@@ -104,7 +104,7 @@ CLASES          → 14 clases principales
    ↓
 CÓDIGO          → src/ (módulos .py)
    ↓
-UML             → uml/diagrama_clases.puml (coincide con el código)
+UML             → drawio/diagrama_clases.drawio (coincide con el código)
    ↓
 INFORME         → docs/informe_final.md + docs/Trabajo_Parcial_FP2.docx
 ```
