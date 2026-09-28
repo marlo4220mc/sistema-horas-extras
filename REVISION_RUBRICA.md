@@ -34,7 +34,8 @@
 | Anexos preparados | Sí | Anexos 1 a 8 con placeholders | `docs/informe_final.md` §G |
 | Cronograma y asignación | Sí | Tabla de 13 actividades con responsables | `docs/informe_final.md` §2.4 |
 | Evidencias del trabajo en equipo | Preparado | Placeholders `[INSERTAR CAPTURA]` | `docs/informe_final.md` §G |
-| URL de Git / Trello | Preparado | Placeholders `[INSERTAR URL DE GIT]` / `[INSERTAR URL DE TRELLO]` | `docs/informe_final.md` §G |
+| URL de Git | Sí | Repositorio privado con 17 commits por etapas | https://github.com/marlo4220mc/sistema-horas-extras |
+| URL de Trello | Preparado | Placeholder `[INSERTAR URL DE TRELLO]` | `docs/informe_final.md` §G |
 
 ---
 
@@ -144,7 +145,7 @@ con placeholders. No se inventó información:
 | Nombre del docente | carátula | `[DOCENTE]` |
 | Nombre de la empresa | informe y docs | `[NOMBRE DE LA EMPRESA]` |
 | Capturas de evidencias | Anexos 1–6 | `[INSERTAR CAPTURA]` |
-| URL de Git | Anexo 7 | `[INSERTAR URL DE GIT]` |
+| URL de Trello | Anexo 8 | `[INSERTAR URL DE TRELLO]` |
 | URL de Trello | Anexo 8 | `[INSERTAR URL DE TRELLO]` |
 | Nombre del archivo de entrega | — | `GRUPO_XX_TP_FP2_Ciclo` (definido por el grupo) |
 | Actualizar el índice del DOCX | `docs/Trabajo_Parcial_FP2.docx` | Abrir en Word y actualizar el campo TOC |

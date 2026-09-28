@@ -93,7 +93,7 @@ SistemaHorasExtras/
 ## Instalación
 
 ```bash
-git clone [INSERTAR URL DE GIT]
+git clone https://github.com/marlo4220mc/sistema-horas-extras
 cd SistemaHorasExtras
 ```
 

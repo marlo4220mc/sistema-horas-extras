@@ -409,9 +409,9 @@ Diagramas de flujo en `uml/` e imágenes en `salida/`.
 
 ## ANEXO 7 — Git
 
-[INSERTAR URL DE GIT]
+https://github.com/marlo4220mc/sistema-horas-extras
 
-URL del repositorio con los *commits* por rol de todo el equipo.
+Repositorio privado con los *commits* del equipo (historia por etapas).
 
 ## ANEXO 8 — Trello
 
