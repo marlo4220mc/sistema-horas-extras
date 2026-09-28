@@ -127,6 +127,13 @@ Ver `docs/07_pruebas.md`.
 
 Los archivos `.puml` se pueden visualizar en <https://www.plantuml.com/plantuml>.
 
+## Gestión del proyecto
+
+El cronograma y la asignación de actividades se gestionan en un tablero de Trello:
+
+- Tablero: <https://trello.com/b/VRlZeBkn/sistema-de-horas-extras-tp-fp2>
+- 5 listas (una por fase) y 13 tarjetas con responsable, fechas y estado.
+
 ## Documentación
 
 - `docs/00_requisitos_enunciado.md`
