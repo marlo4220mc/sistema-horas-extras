@@ -1,77 +1,77 @@
 <mxfile host="app.diagrams.net" agent="Sistema de Horas Extras" type="device">
   <diagram id="tp-fp2" name="Casos de uso">
-    <mxGraphModel dx="1100" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="820" pageHeight="960" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="736" pageHeight="392" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
         <mxCell id="n10" value="Responsable de RR. HH. / Supervisor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="60" y="300" width="60" height="110" as="geometry"/>
+          <mxGeometry x="50" y="120" width="60" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="n11" value="Registrar empleado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="40" width="300" height="56" as="geometry"/>
+        <mxCell id="n11" value="Registrar empleado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="14" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e11" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n11">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e11" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n11">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n12" value="Buscar empleado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="120" width="300" height="56" as="geometry"/>
+        <mxCell id="n12" value="Buscar empleado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="76" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e12" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n12">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e12" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n12">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n13" value="Listar empleados" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="200" width="300" height="56" as="geometry"/>
+        <mxCell id="n13" value="Listar empleados" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="138" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e13" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n13">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e13" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n13">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n14" value="Registrar horas extras" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="280" width="300" height="56" as="geometry"/>
+        <mxCell id="n14" value="Registrar horas extras" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="200" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e14" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n14">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e14" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n14">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n15" value="Aprobar o rechazar solicitud" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="360" width="300" height="56" as="geometry"/>
+        <mxCell id="n15" value="Aprobar o rechazar solicitud" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="262" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e15" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n15">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e15" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n15">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n16" value="Calcular pago de horas extras" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="440" width="300" height="56" as="geometry"/>
+        <mxCell id="n16" value="Calcular pago de horas extras" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="230" y="324" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e16" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n16">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e16" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n16">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n17" value="Registrar horas compensadas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="520" width="300" height="56" as="geometry"/>
+        <mxCell id="n17" value="Registrar horas compensadas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="488" y="14" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e17" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n17">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e17" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n17">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n18" value="Consultar saldo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="600" width="300" height="56" as="geometry"/>
+        <mxCell id="n18" value="Consultar saldo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="488" y="76" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e18" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n18">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e18" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n18">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n19" value="Utilizar horas compensadas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="680" width="300" height="56" as="geometry"/>
+        <mxCell id="n19" value="Utilizar horas compensadas" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="488" y="138" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e19" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n19">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e19" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n19">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n20" value="Consultar historial" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="760" width="300" height="56" as="geometry"/>
+        <mxCell id="n20" value="Consultar historial" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="488" y="200" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e20" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n20">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e20" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n20">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n21" value="Generar reportes" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="420" y="840" width="300" height="56" as="geometry"/>
+        <mxCell id="n21" value="Generar reportes" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="488" y="262" width="224" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="e21" style="endArrow=none;html=1;" edge="1" parent="1" source="n10" target="n21">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e21" style="endArrow=none;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n21">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -1,7 +1,7 @@
 # ETAPA 3 — Historias de Usuario
 
 **Proyecto:** Sistema de Gestión y Control de Horas Extras y Horas Compensadas
-**Empresa:** [NOMBRE DE LA EMPRESA]
+**Empresa:** Fábrica Marsar SRL
 **Curso:** 1FIS275 — Fundamentos de Programación 2
 
 Las historias de usuario se redactaron en el formato *Como &lt;rol&gt;, quiero

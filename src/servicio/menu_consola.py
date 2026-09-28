@@ -52,7 +52,7 @@ class MenuConsola:
         print("   SISTEMA DE GESTION Y CONTROL DE HORAS EXTRAS")
         print("            Y HORAS COMPENSADAS")
         print("=" * 56)
-        print(" Empresa: [NOMBRE DE LA EMPRESA]")
+        print(" Empresa: Fábrica Marsar SRL")
         print(" Curso  : 1FIS275 - Fundamentos de Programacion 2")
         print("=" * 56)
 

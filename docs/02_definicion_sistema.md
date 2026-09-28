@@ -10,7 +10,7 @@
 
 Desarrollar una aplicación de consola en Python que permita registrar,
 gestionar, controlar, consultar y calcular las horas extras y las horas
-compensadas de los empleados de [NOMBRE DE LA EMPRESA].
+compensadas de los empleados de Fábrica Marsar SRL.
 
 ## 3. Alcance
 

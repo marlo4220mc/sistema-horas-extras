@@ -1,53 +1,53 @@
 <mxfile host="app.diagrams.net" agent="Sistema de Horas Extras" type="device">
   <diagram id="tp-fp2" name="Registrar horas extras">
-    <mxGraphModel dx="1100" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1000" math="0" shadow="0">
+    <mxGraphModel dx="1100" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="784" pageHeight="356" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
         <mxCell id="n10" value="INICIO" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1f4e79;fontColor=#ffffff;strokeColor=#1f4e79;fontStyle=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="340" y="40" width="160" height="50" as="geometry"/>
+          <mxGeometry x="24" y="24" width="110" height="42" as="geometry" />
         </mxCell>
         <mxCell id="n11" value="Ingresar codigo de empleado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="260" y="130" width="320" height="60" as="geometry"/>
+          <mxGeometry x="182" y="24" width="210" height="52" as="geometry" />
         </mxCell>
-        <mxCell id="e11" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n10" target="n11">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e11" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n10" target="n11">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="n12" value="Existe el empleado?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="300" y="230" width="240" height="120" as="geometry"/>
+          <mxGeometry x="440" y="24" width="220" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="e12" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n11" target="n12">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e12" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n11" target="n12">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n13" value="Ingresar fecha, cantidad de horas y motivo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="260" y="390" width="320" height="60" as="geometry"/>
+        <mxCell id="n13" value="Ingresar fecha,&#10;horas y motivo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="550" y="144" width="210" height="52" as="geometry" />
         </mxCell>
         <mxCell id="e13" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n12" target="n13">
-          <mxGeometry relative="1" as="geometry"/>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n14" value="Fecha no futura y 0 &lt; horas &lt;= 24?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="300" y="490" width="240" height="120" as="geometry"/>
+        <mxCell id="n14" value="Fecha no futura y&#10;0 &lt; horas &lt;= 24?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="282" y="144" width="220" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="e14" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n13" target="n14">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e14" style="endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="n13" target="n14">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="n15" value="Crear HoraExtra y SolicitudHoraExtra (PENDIENTE)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="260" y="650" width="320" height="60" as="geometry"/>
+        <mxCell id="n15" value="Crear HoraExtra y&#10;SolicitudHoraExtra" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="24" y="144" width="210" height="52" as="geometry" />
         </mxCell>
-        <mxCell id="e15" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n14" target="n15">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e15" style="endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="n14" target="n15">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="n16" value="Mostrar el pago calculado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="260" y="750" width="320" height="60" as="geometry"/>
+          <mxGeometry x="24" y="264" width="210" height="52" as="geometry" />
         </mxCell>
         <mxCell id="e16" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n15" target="n16">
-          <mxGeometry relative="1" as="geometry"/>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="n17" value="FIN" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1f4e79;fontColor=#ffffff;strokeColor=#1f4e79;fontStyle=1;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="340" y="850" width="160" height="50" as="geometry"/>
+          <mxGeometry x="282" y="264" width="110" height="42" as="geometry" />
         </mxCell>
-        <mxCell id="e17" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="n16" target="n17">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="e17" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="n16" target="n17">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -31,15 +31,15 @@ Ingeniería de Sistemas EPE
 
 **Integrantes:**
 
-[INTEGRANTE 1]
-[INTEGRANTE 2]
-[INTEGRANTE 3]
-[INTEGRANTE 4]
+Marlon James Castro Castro
+Fatima Auris Aliaga
+Victor Hugo López Sobrado
+
 
 <br>
 
 **Docente:**
-[DOCENTE]
+Chahuas Rebatta, César Eduardo
 
 **Ciclo:**
 2026-25
@@ -52,49 +52,49 @@ Ingeniería de Sistemas EPE
 
 # B. ÍNDICE
 
-1. Introducción
-2. Capítulo 1: Situación Actual
-   - 2.1 Análisis del Problema
-   - 2.2 Objetivo del Sistema
-   - 2.3 Lista de Funcionalidades / Historias de Usuario, priorizadas
-   - 2.4 Cronograma y Asignación de Actividades
-3. Capítulo 2: Propuesta de Innovación
-   - 3.1 Diseño de Flujo de Aplicación
-   - 3.2 Diagrama de Clases del Modelo
-4. Bibliografía
-5. Anexos
+1. Introducción … 3
+2. Capítulo 1: Situación Actual … 4
+   - 2.1 Análisis del Problema … 4
+   - 2.2 Objetivo del Sistema … 5
+   - 2.3 Lista de Funcionalidades / Historias de Usuario, priorizadas … 5
+   - 2.4 Cronograma y Asignación de Actividades … 5
+3. Capítulo 2: Propuesta de Innovación … 7
+   - 3.1 Diseño de Flujo de Aplicación … 7
+   - 3.2 Diagrama de Clases del Modelo … 13
+4. Bibliografía … 15
+5. Anexos … 16
 
 ---
 
 # C. INTRODUCCIÓN
 
 El presente trabajo se desarrolla en el marco del curso Fundamentos de
-Programación 2 de Ingeniería de Sistemas EPE. El objetivo es resolver, con un
-programa orientado a objetos, un problema real identificado en un proceso de
-negocio de una empresa.
+Programación 2 de Ingeniería de Sistemas EPE y tiene como finalidad aplicar
+los principios de la programación orientada a objetos para plantear una
+solución a un problema real identificado en un proceso de negocio de una
+empresa.
 
-El problema elegido pertenece al área de Recursos Humanos. En [NOMBRE DE LA
-EMPRESA], el control de las horas que los empleados trabajan fuera de su
-jornada habitual y de las horas que luego se compensan se realizaba de forma
-manual: formularios en papel, planillas de cálculo aisladas y un cuaderno para
-llevar el saldo de horas compensadas. Esa forma de trabajo generaba retrasos,
-errores al transcribir los datos y discrepancias entre lo que el empleado
-reportaba, lo que el supervisor aprobaba y lo que finalmente se pagaba o
-compensaba.
+El problema seleccionado corresponde al proceso de gestión y control de horas
+extras y horas compensadas. Actualmente, el registro de estas horas se realiza
+mediante cuadernos y archivos Excel, generando duplicidad de información
+debido a que los datos registrados por los trabajadores deben ser
+posteriormente trasladados a un medio digital. Esta situación puede ocasionar
+errores en el registro, dificultades para realizar el seguimiento de las
+solicitudes y demoras en su revisión, aprobación y posterior procesamiento.
 
-Frente a esta situación, se propone el **Sistema de Gestión y Control de Horas
-Extras y Horas Compensadas**, una aplicación de consola desarrollada en Python
-que centraliza el registro de empleados, el registro y la aprobación de horas
-extras, el cálculo del pago, el control del saldo de horas compensadas y la
-generación de reportes. El alcance del sistema es académico: trabaja en memoria
-(sin base de datos), no incluye interfaz gráfica ni integración con otros
-sistemas, y las reglas de cálculo son configurables por el equipo.
+Ante esta situación, se propone desarrollar un Sistema de Gestión y Control de
+Horas Extras y Horas Compensadas, como una aplicación de consola desarrollada
+en Python. El sistema permitirá registrar trabajadores y sus horas, gestionar
+la aprobación o rechazo por parte del responsable del área, controlar el saldo
+de horas compensadas, realizar los cálculos correspondientes y consultar el
+historial de registros.
 
-La solución se construyó aplicando los conceptos del curso: clases y objetos,
-encapsulamiento, herencia, polimorfismo, colecciones tipo lista, manejo de
-excepciones y pruebas de los métodos de negocio con `unittest`. El resultado es
-un programa de 14 clases principales que se ejecuta desde un menú de consola y
-que puede explicarse y defenderse con claridad.
+La solución será desarrollada aplicando conceptos de programación orientada a
+objetos, tales como clases, objetos, encapsulamiento, herencia y polimorfismo,
+además del uso de colecciones, manejo de excepciones y pruebas de los métodos
+de negocio. El sistema tendrá un alcance académico y trabajará con información
+almacenada en memoria, sin integración con una base de datos o sistemas
+externos.
 
 ---
 
@@ -104,16 +104,21 @@ que puede explicarse y defenderse con claridad.
 
 ### Situación actual
 
-El proceso de control de horas se realizaba en tres pasos que no estaban
-conectados entre sí:
+Actualmente, el proceso de gestión de horas extras y horas compensadas se
+realiza mediante el registro de información en cuadernos y archivos Excel. El
+trabajador registra las horas realizadas en un cuaderno y posteriormente esta
+información es trasladada a un archivo Excel para su control.
 
-1. El empleado llenaba un formulario en papel cuando hacía horas extras y lo
-   dejaba en su escritorio hasta fin de mes.
-2. El supervisor recogía los formularios y anotaba en una planilla si los
-   aprobaba o rechazaba.
-3. El área de Recursos Humanos consolidaba la planilla, calculaba con
-   calculadora lo que se debía pagar y llevaba por separado un cuaderno con las
-   horas compensadas.
+Una vez registrada la información, el responsable del área revisa las horas
+reportadas y determina su aprobación o rechazo. En el caso de las horas extras
+aprobadas, posteriormente se realiza el cálculo correspondiente para su
+procesamiento. Por otro lado, las horas compensadas requieren llevar un
+control del saldo disponible de cada trabajador y de las horas utilizadas.
+
+Este proceso implica el manejo de información en diferentes medios y el
+traslado manual de datos, lo que puede generar errores de registro, duplicidad
+de información, dificultades para consultar el estado de las solicitudes y
+falta de un control centralizado del saldo de horas compensadas.
 
 ### Problema
 
@@ -151,10 +156,11 @@ mantenga un saldo confiable por empleado.
 
 ### Objetivo general
 
-Desarrollar una aplicación de consola en Python que gestione y controle las
-horas extras y las horas compensadas de los empleados de [NOMBRE DE LA
-EMPRESA], permitiendo el registro, la aprobación, el cálculo de pago, el
-control de saldo y la generación de reportes.
+Desarrollar una aplicación de consola en Python que permita gestionar y
+controlar las horas extras y horas compensadas de los empleados de Fábrica
+Marsar SRL, mediante el registro de horas, la revisión y aprobación por parte
+del responsable del área, el cálculo de las horas extras y el control del
+saldo de horas compensadas.
 
 ### Objetivos específicos
 
@@ -162,12 +168,12 @@ control de saldo y la generación de reportes.
 |---|---------------------|
 | OE1 | Registrar y mantener actualizados los datos de los empleados. |
 | OE2 | Registrar solicitudes de horas extras con fecha, cantidad de horas y motivo. |
-| OE3 | Aprobar o rechazar solicitudes con un estado formal. |
-| OE4 | Calcular automáticamente el valor hora y el pago de las horas extras aprobadas. |
-| OE5 | Registrar horas compensadas y mantener un saldo actualizado por empleado. |
-| OE6 | Permitir utilizar horas compensadas respetando el saldo disponible. |
-| OE7 | Generar reportes de empleados, horas extras, solicitudes pendientes y saldos. |
-| OE8 | Controlar los datos de entrada con validaciones y excepciones personalizadas. |
+| OE3 | Permitir al responsable del área revisar, aprobar o rechazar los registros de horas extras. |
+| OE4 | Calcular el valor correspondiente a las horas extras aprobadas de acuerdo con las reglas definidas para el sistema. |
+| OE5 | Registrar las horas compensadas y mantener actualizado el saldo disponible de cada empleado. |
+| OE6 | Permitir la utilización de horas compensadas, validando que el empleado cuente con saldo suficiente. |
+| OE7 | Permitir la consulta de empleados, solicitudes, estados, historial y saldos de horas. |
+| OE8 | Validar los datos ingresados y controlar las situaciones no válidas mediante el manejo de excepciones. |
 
 ## 2.3 Lista de Funcionalidades / Historias de Usuario, priorizadas
 
@@ -178,11 +184,11 @@ control de saldo y la generación de reportes.
 | HU03 | Listar empleados | Media |
 | HU04 | Registrar horas extras | Alta |
 | HU05 | Consultar solicitudes | Alta |
-| HU06 | Aprobar horas extras | Alta |
-| HU07 | Rechazar horas extras | Alta |
-| HU08 | Calcular pago de horas extras | Alta |
+| HU06 | Aprobar solicitud de horas extras | Alta |
+| HU07 | Rechazar solicitud de horas extras | Alta |
+| HU08 | Calcular pago de horas extras aprobadas | Alta |
 | HU09 | Registrar horas compensadas | Alta |
-| HU10 | Consultar saldo | Alta |
+| HU10 | Consultar saldo de horas compensadas | Alta |
 | HU11 | Utilizar horas compensadas | Alta |
 | HU12 | Consultar historial | Media |
 | HU13 | Generar reportes | Media |
@@ -194,7 +200,7 @@ la implementa) está en `docs/03_historias_usuario.md`.
 
 El trabajo se organizó por semanas del ciclo 2026-25. La evaluación del trabajo
 parcial corresponde a la semana 4. Las actividades se distribuyeron entre los
-cuatro integrantes.
+tres integrantes.
 
 | # | Actividad | Responsable | Inicio | Fin | Estado |
 |---|-----------|-------------|--------|-----|--------|
@@ -204,12 +210,12 @@ cuatro integrantes.
 | 4 | Diseño de flujos de la aplicación | Integrante 2 | 07/09/2026 | 10/09/2026 | Completado |
 | 5 | Diseño de clases, herencia y polimorfismo | Integrante 1 | 08/09/2026 | 12/09/2026 | Completado |
 | 6 | Diagrama de clases UML | Integrante 3 | 12/09/2026 | 15/09/2026 | Completado |
-| 7 | Implementación de las clases del modelo | Integrante 4 | 12/09/2026 | 18/09/2026 | Completado |
+| 7 | Implementación de las clases del modelo | Integrante 3 | 12/09/2026 | 18/09/2026 | Completado |
 | 8 | Implementación de cálculos, excepciones y menú | Integrante 1 | 15/09/2026 | 21/09/2026 | Completado |
-| 9 | Pruebas unitarias con unittest | Integrante 4 | 18/09/2026 | 22/09/2026 | Completado |
+| 9 | Pruebas unitarias con unittest | Integrante 2 | 18/09/2026 | 22/09/2026 | Completado |
 | 10 | Corrección de errores y reejecución de pruebas | Integrante 2 | 22/09/2026 | 23/09/2026 | Completado |
 | 11 | Revisión del UML contra el código | Integrante 3 | 23/09/2026 | 24/09/2026 | Completado |
-| 12 | Elaboración del informe y anexos | Integrante 4 | 23/09/2026 | 26/09/2026 | Completado |
+| 12 | Elaboración del informe y anexos | Integrante 1 | 23/09/2026 | 26/09/2026 | Completado |
 | 13 | Revisión final contra la rúbrica | Integrante 1 | 26/09/2026 | 26/09/2026 | Completado |
 
 Herramienta de gestión: Trello (ver Anexo 8).
@@ -370,51 +376,103 @@ https://peps.python.org/pep-0008/
 
 ## ANEXO 1 — Evidencias del trabajo en equipo
 
-[INSERTAR CAPTURA]
-
 Coordinaciones realizadas por cada integrante (reuniones, acuerdos y
-distribución de tareas).
+distribución de tareas). Los números de teléfono de los participantes se
+difuminaron en las capturas del grupo.
+
+![Carpeta compartida en Google Drive](img/evidencias/anexo1_drive_archivos.jpg)
+
+*Figura 8. Carpeta compartida en Google Drive con el enunciado, la propuesta y el documento del equipo*
+
+![Carpeta de Drive con la estructura del proyecto](img/evidencias/anexo2_drive_test.jpg)
+
+*Figura 9. Carpeta de Drive con la estructura de carpetas del proyecto y el documento del trabajo parcial*
+
+![Acuerdo sobre el problema real](img/evidencias/anexo3_whatsapp_problema.jpg)
+
+*Figura 10. Acuerdo sobre el problema real y sobre el lenguaje de programación del curso*
+
+![Ajuste del proceso real](img/evidencias/anexo4_whatsapp_proceso.jpg)
+
+*Figura 11. Ajuste del proceso real: registro en cuaderno y Excel, y aprobación a cargo del responsable del área*
+
+![Revisión del código y reparto de anexos](img/evidencias/anexo5_whatsapp_codigo.jpg)
+
+*Figura 12. Revisión del código del sistema y distribución de los anexos entre los integrantes*
+
+![Organización del trabajo en Trello](img/evidencias/anexo6_whatsapp_trello.jpg)
+
+*Figura 13. Organización del trabajo en el tablero de Trello a partir del cronograma del documento*
+
+![Permisos de edición del documento](img/evidencias/anexo7_drive_acceso.jpg)
+
+*Figura 14. Permisos de edición del documento compartido para los tres integrantes del equipo*
+
+![Diagrama de clases y comentarios de revisión](img/evidencias/anexo8_word_diagrama.jpg)
+
+*Figura 15. Documento del trabajo parcial con el diagrama de clases y los comentarios de revisión*
 
 ## ANEXO 2 — Evidencias de desarrollo
 
-[INSERTAR CAPTURA]
-
-Capturas de la ejecución del programa y de las pruebas unitarias
+Capturas del código fuente y de la comparación de versiones durante el
+desarrollo, junto con la ejecución del programa
 (ver también `salida/pruebas_unittest.txt`).
 
-## ANEXO 3 — Capturas del sistema
+![Estructura del proyecto y punto de entrada](img/evidencias/anexo9_codigo_main.jpg)
 
-[INSERTAR CAPTURA]
+*Figura 16. Estructura del proyecto y punto de entrada `src/main.py`*
+
+![Comparación de cambios entre versiones](img/evidencias/git_comparacion_cambios.png)
+
+*Figura 17. Comparación de cambios entre dos versiones de `menu_consola.py`*
+
+## ANEXO 3 — Capturas del sistema
 
 Capturas del menú principal, del registro de empleados, del registro de horas
 extras, de la aprobación de solicitudes y de los reportes. La salida completa
 de una ejecución real está en `salida/ejecucion_menu.txt`.
 
+![Menú principal y búsqueda de empleado](img/evidencias/anexo10_sistema_menu.jpg)
+
+*Figura 18. Menú principal y búsqueda de empleado por código (EG04, Ana Torres)*
+
 ## ANEXO 4 — Pruebas
 
-[INSERTAR CAPTURA]
+![Salida de la ejecución de las pruebas unitarias](img/evidencias/pruebas_unittest.png)
+
+*Figura 19. Salida de la ejecución de las pruebas unitarias (unittest)*
 
 Resultado de la ejecución con `unittest`: 23 pruebas ejecutadas, 23 correctas,
 0 fallidas. Detalle en `docs/07_pruebas.md`.
 
 ## ANEXO 5 — UML
 
-[INSERTAR CAPTURA]
-
 Diagrama de clases en `drawio/diagrama_clases.drawio` e imagen en
 `salida/diagrama_clases.png`.
 
+![Diagrama de clases del modelo](../salida/diagrama_clases.png)
+
+*Figura 20. Diagrama de clases del modelo (véase también la Figura 6)*
+
 ## ANEXO 6 — Flujo
 
-[INSERTAR CAPTURA]
-
-Diagramas de flujo en `uml/` e imágenes en `salida/`.
+Los cuatro diagramas de flujo se muestran en las Figuras 2 a 5 del capítulo 2.
+Los archivos editables están en `/drawio` y las imágenes en `/salida` del
+repositorio *github*.
 
 ## ANEXO 7 — Git
 
 https://github.com/marlo4220mc/sistema-horas-extras
 
-Repositorio privado con los *commits* del equipo (historia por etapas).
+Repositorio público con los *commits* del equipo (historia por etapas).
+
+![Repositorio en GitHub](img/evidencias/git_repositorio_github.png)
+
+*Figura 21. Repositorio del equipo en GitHub con el historial de commits*
+
+![Historial de versiones de un archivo](img/evidencias/git_historial_archivo.png)
+
+*Figura 22. Historial de versiones del archivo `hora_compensada.py`*
 
 ## ANEXO 8 — Trello
 
@@ -426,3 +484,5 @@ El tablero tiene 5 listas (una por fase del proyecto) y 13 tarjetas, una por
 actividad del cronograma, con el responsable, las fechas y el estado.
 
 ![Tablero de Trello con el cronograma](img/tablero_trello.png)
+
+*Figura 23. Tablero de Trello con el cronograma y la asignación de actividades*
