@@ -415,6 +415,11 @@ Repositorio privado con los *commits* del equipo (historia por etapas).
 
 ## ANEXO 8 — Trello
 
-[INSERTAR URL DE TRELLO]
+Tablero de gestión del cronograma y de las actividades del equipo:
 
-Tablero de gestión del cronograma y de las actividades del equipo.
+https://trello.com/b/VRlZeBkn/sistema-de-horas-extras-tp-fp2
+
+El tablero tiene 5 listas (una por fase del proyecto) y 13 tarjetas, una por
+actividad del cronograma, con el responsable, las fechas y el estado.
+
+![Tablero de Trello con el cronograma](img/tablero_trello.png)
