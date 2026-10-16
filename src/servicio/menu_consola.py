@@ -26,6 +26,10 @@ class MenuConsola:
     errores se capturan y se informan.
     """
 
+    # Ancho de las lineas de la interfaz de consola. Todas las pantallas usan
+    # la misma medida para que el menu y los mensajes queden alineados.
+    ANCHO_PANTALLA = 56
+
     def __init__(self, gestor: GestorHorasExtras) -> None:
         if gestor is None:
             raise ValueError("El gestor es obligatorio.")
@@ -48,19 +52,19 @@ class MenuConsola:
 
     def _mostrar_bienvenida(self) -> None:
         print()
-        print("=" * 56)
+        print("=" * self.ANCHO_PANTALLA)
         print("   SISTEMA DE GESTION Y CONTROL DE HORAS EXTRAS")
         print("            Y HORAS COMPENSADAS")
-        print("=" * 56)
+        print("=" * self.ANCHO_PANTALLA)
         print(" Empresa: Fábrica Marsar SRL")
         print(" Curso  : 1FIS275 - Fundamentos de Programacion 2")
-        print("=" * 56)
+        print("=" * self.ANCHO_PANTALLA)
 
     def _mostrar_menu_principal(self) -> None:
         print()
-        print("=" * 56)
+        print("=" * self.ANCHO_PANTALLA)
         print("                  MENU PRINCIPAL")
-        print("=" * 56)
+        print("=" * self.ANCHO_PANTALLA)
         print(" 1. Registrar empleado")
         print(" 2. Buscar empleado")
         print(" 3. Listar empleados")
@@ -75,7 +79,7 @@ class MenuConsola:
         print("12. Historial")
         print("13. Reportes")
         print(" 0. Salir")
-        print("=" * 56)
+        print("=" * self.ANCHO_PANTALLA)
 
     def _ejecutar_opcion(self, opcion: int) -> None:
         try:
