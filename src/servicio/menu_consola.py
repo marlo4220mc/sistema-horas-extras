@@ -13,8 +13,11 @@ from excepciones import (
     SaldoInsuficienteError,
     SolicitudNoEncontradaError,
 )
+#Las nuevas son Empleado y ResponsableRRHH.)
+from modelo.empleado import Empleado
 from modelo.estado_solicitud import EstadoSolicitud
 from modelo.registro_hora import RegistroHora
+from modelo.responsable_rrhh import ResponsableRRHH
 from modelo.solicitud import Solicitud
 from modelo.supervisor import Supervisor
 from servicio.gestor_horas_extras import GestorHorasExtras
@@ -25,11 +28,12 @@ class MenuConsola:
     resultados. Ninguna entrada incorrecta debe terminar el programa: los
     errores se capturan y se informan.
     """
-
-    # Ancho de las lineas de la interfaz de consola. Todas las pantallas usan
-    # la misma medida para que el menu y los mensajes queden alineados.
+#AGREGADO PARA PANTALLA
     ANCHO_PANTALLA = 56
-
+    COLUMNAS_EMPLEADOS = [
+        ("Cod.", "<"), ("Nombre", "<"), ("Cargo", "<"),
+        ("Rol", "<"), ("Salario S/", ">"), ("Saldo h", ">"),
+    ]
     def __init__(self, gestor: GestorHorasExtras) -> None:
         if gestor is None:
             raise ValueError("El gestor es obligatorio.")
@@ -50,36 +54,60 @@ class MenuConsola:
             self._ejecutar_opcion(opcion)
         print("\nFin de la ejecucion. Gracias por usar el sistema.")
 
+    #Actualizado _mostrar_bienvenida y _mostrar_menu_principal
+
     def _mostrar_bienvenida(self) -> None:
+        ancho = self.ANCHO_PANTALLA
         print()
-        print("=" * self.ANCHO_PANTALLA)
-        print("   SISTEMA DE GESTION Y CONTROL DE HORAS EXTRAS")
-        print("            Y HORAS COMPENSADAS")
-        print("=" * self.ANCHO_PANTALLA)
+        print("=" * ancho)
+        print("SISTEMA DE GESTION Y CONTROL DE HORAS EXTRAS".center(ancho))
+        print("Y HORAS COMPENSADAS".center(ancho))
+        print("=" * ancho)
         print(" Empresa: Fábrica Marsar SRL")
         print(" Curso  : 1FIS275 - Fundamentos de Programacion 2")
-        print("=" * self.ANCHO_PANTALLA)
+        print("=" * ancho)
 
     def _mostrar_menu_principal(self) -> None:
+        ancho = self.ANCHO_PANTALLA
+        hoy = date.today().strftime("%d/%m/%Y")
+        total_empleados = len(self._gestor.listar_empleados())
+        pendientes = len(self._gestor.listar_solicitudes_pendientes())
+        secciones = [
+            ("EMPLEADOS", [
+                (1, "Registrar empleado"),
+                (2, "Buscar empleado"),
+                (3, "Listar empleados"),
+            ]),
+            ("HORAS EXTRAS", [
+                (4, "Registrar horas extras"),
+                (5, "Listar solicitudes"),
+                (6, "Aprobar solicitud"),
+                (7, "Rechazar solicitud"),
+                (8, "Calcular pago de horas extras"),
+            ]),
+            ("HORAS COMPENSADAS", [
+                (9, "Registrar horas compensadas"),
+                (10, "Consultar saldo"),
+                (11, "Utilizar horas compensadas"),
+            ]),
+            ("CONSULTAS E INFORMES", [
+                (12, "Historial"),
+                (13, "Reportes"),
+            ]),
+        ]
         print()
-        print("=" * self.ANCHO_PANTALLA)
-        print("                  MENU PRINCIPAL")
-        print("=" * self.ANCHO_PANTALLA)
-        print(" 1. Registrar empleado")
-        print(" 2. Buscar empleado")
-        print(" 3. Listar empleados")
-        print(" 4. Registrar horas extras")
-        print(" 5. Listar solicitudes")
-        print(" 6. Aprobar solicitud")
-        print(" 7. Rechazar solicitud")
-        print(" 8. Calcular pago de horas extras")
-        print(" 9. Registrar horas compensadas")
-        print("10. Consultar saldo")
-        print("11. Utilizar horas compensadas")
-        print("12. Historial")
-        print("13. Reportes")
-        print(" 0. Salir")
-        print("=" * self.ANCHO_PANTALLA)
+        print("=" * ancho)
+        print("MENU PRINCIPAL".center(ancho))
+        print("=" * ancho)
+        print(f" Fecha: {hoy} | Empleados: {total_empleados} | Pendientes: {pendientes}")
+        print("-" * ancho)
+        for titulo, opciones in secciones:
+            print(f" {titulo}")
+            for numero, texto in opciones:
+                print(f"  {numero:>2}. {texto}")
+        print("-" * ancho)
+        print(f"  {0:>2}. Salir")
+        print("=" * ancho)
 
     def _ejecutar_opcion(self, opcion: int) -> None:
         try:
@@ -119,8 +147,12 @@ class MenuConsola:
     # ------------------------------------------------------------------
     # Opciones del menu
     # ------------------------------------------------------------------
+
+    # ACTUALIZADO _registrar_empleado (reemplazar el método)
     def _registrar_empleado(self) -> None:
-        print("\n--- REGISTRAR EMPLEADO ---")
+        self._encabezado_pantalla("REGISTRAR EMPLEADO")
+        print(" Complete los datos del nuevo empleado.")
+        self._linea()
         # El codigo y el documento se validan apenas se ingresan, para no
         # pedir todo el formulario y recien al final avisar del duplicado.
         codigo = self._leer_codigo_disponible("Codigo de empleado (ej. E006): ")
@@ -145,7 +177,10 @@ class MenuConsola:
                 codigo, nombres, apellidos, tipo_documento, numero_documento, correo,
                 salario, cargo, fecha_ingreso,
             )
-            print(f"  OK. Empleado registrado: {empleado}")
+            self._linea()
+            print(" OK. Empleado registrado correctamente.")
+            self._imprimir_ficha_empleado(empleado)
+            self._linea("=")
         except EmpleadoDuplicadoError as error:
             print(f"  ! {error}")
 
@@ -334,43 +369,60 @@ class MenuConsola:
             return codigo
         return ""
 
+    # ACTUALIZADO _buscar_empleado y _listar_empleados
+
     def _buscar_empleado(self) -> None:
-        print("\n--- BUSCAR EMPLEADO ---")
-        print("1. Por codigo   2. Por documento   3. Por apellido")
+        self._encabezado_pantalla("BUSCAR EMPLEADO")
+        print(" Criterios de busqueda:")
+        print("   1. Por codigo")
+        print("   2. Por documento")
+        print("   3. Por apellido")
+        self._linea()
         criterio = self._leer_entero("Criterio: ")
         try:
             if criterio == 1:
                 empleado = self._gestor.buscar_empleado_por_codigo(
                     self._leer_texto("Codigo: ")
                 )
-                print(f"  {empleado}")
+                self._linea()
+                self._imprimir_ficha_empleado(empleado)
+                self._linea("=")
             elif criterio == 2:
                 empleado = self._gestor.buscar_empleado_por_documento(
                     self._leer_texto("Documento: ")
                 )
-                print(f"  {empleado}")
+                self._linea()
+                self._imprimir_ficha_empleado(empleado)
+                self._linea("=")
             elif criterio == 3:
                 encontrados = self._gestor.buscar_empleados_por_apellido(
                     self._leer_texto("Apellido: ")
                 )
                 if not encontrados:
+                    self._linea()
                     print("  No se encontraron empleados con ese apellido.")
-                for empleado in encontrados:
-                    print(f"  {empleado}")
+                else:
+                    self._imprimir_tabla(
+                        "RESULTADOS DE LA BUSQUEDA", self.COLUMNAS_EMPLEADOS,
+                        self._filas_empleados(encontrados),
+                        f"Coincidencias: {len(encontrados)} empleado(s).",
+                    )
             else:
                 print("  ! Criterio no valido.")
         except EmpleadoNoEncontradoError as error:
             print(f"  ! {error}")
 
     def _listar_empleados(self) -> None:
-        print("\n--- LISTA DE EMPLEADOS ---")
         empleados = self._gestor.listar_empleados()
         if not empleados:
+            self._encabezado_pantalla("LISTA DE EMPLEADOS")
             print("  No hay empleados registrados.")
             return
-        for empleado in empleados:
-            print(f"  {empleado}")
-        print(f"  Total: {len(empleados)} empleado(s).")
+        self._imprimir_tabla(
+            "LISTA DE EMPLEADOS", self.COLUMNAS_EMPLEADOS,
+            self._filas_empleados(empleados),
+            f"Total: {len(empleados)} empleado(s).",
+        )
 
     def _registrar_horas_extras(self) -> None:
         print("\n--- REGISTRAR HORAS EXTRAS ---")
@@ -585,6 +637,92 @@ class MenuConsola:
         for solicitud in solicitudes:
             print(f"  {solicitud.resumen()}")
             print(f"      {solicitud.detalle()}")
+
+    # ------------------------------------------------------------------
+    # helpers visuales (agregar, método nuevo) Presentacion de pantallas (helpers visuales)
+    # ------------------------------------------------------------------
+    def _encabezado_pantalla(self, titulo: str, ancho: int | None = None) -> None:
+        """Imprime el titulo de una pantalla entre dos lineas de '='."""
+        ancho = ancho or self.ANCHO_PANTALLA
+        print()
+        print("=" * ancho)
+        print(titulo.center(ancho).rstrip())
+        print("=" * ancho)
+
+    def _linea(self, caracter: str = "-", ancho: int | None = None) -> None:
+        """Imprime una linea separadora con el ancho de pantalla."""
+        print(caracter * (ancho or self.ANCHO_PANTALLA))
+
+    def _imprimir_tabla(
+        self,
+        titulo: str,
+        columnas: list[tuple[str, str]],
+        filas: list[tuple],
+        pie: str | None = None,
+    ) -> None:
+        """Imprime una pantalla con una tabla. 'columnas' es una lista de
+        (nombre, alineacion) con alineacion '<' (izquierda) o '>' (derecha).
+        El ancho de cada columna se ajusta al contenido.
+        """
+        textos = [tuple(str(celda) for celda in fila) for fila in filas]
+        anchos = [
+            max([len(nombre)] + [len(fila[i]) for fila in textos])
+            for i, (nombre, _) in enumerate(columnas)
+        ]
+        ancho_total = max(
+            self.ANCHO_PANTALLA, 1 + sum(anchos) + 3 * (len(anchos) - 1)
+        )
+
+        def formatear(celdas: tuple) -> str:
+            partes = [
+                f"{celda:{alineacion}{ancho}}"
+                for celda, (_, alineacion), ancho in zip(celdas, columnas, anchos)
+            ]
+            return (" " + " | ".join(partes)).rstrip()
+
+        self._encabezado_pantalla(titulo, ancho_total)
+        print(formatear(tuple(nombre for nombre, _ in columnas)))
+        self._linea("-", ancho_total)
+        for fila in textos:
+            print(formatear(fila))
+        self._linea("-", ancho_total)
+        if pie:
+            print(f" {pie}")
+        self._linea("=", ancho_total)
+
+    def _filas_empleados(self, empleados: list[Empleado]) -> list[tuple]:
+        """Convierte empleados en filas para COLUMNAS_EMPLEADOS."""
+        return [
+            (
+                e.codigo_empleado, e.nombre_completo, e.cargo, e.obtener_rol(),
+                f"{e.salario_mensual:,.2f}", f"{e.saldo_horas_compensadas:.2f}",
+            )
+            for e in empleados
+        ]
+
+    def _imprimir_ficha_empleado(self, empleado: Empleado) -> None:
+        """Muestra todos los datos de un empleado, uno por linea."""
+        campos = [
+            ("Codigo", empleado.codigo_empleado),
+            ("Nombre", empleado.nombre_completo),
+            ("Documento", f"{empleado.tipo_documento} {empleado.numero_documento}"),
+            ("Correo", empleado.correo),
+            ("Cargo", empleado.cargo),
+            ("Rol", empleado.obtener_rol()),
+            ("Fecha de ingreso", empleado.fecha_ingreso.strftime("%d/%m/%Y")),
+            ("Salario mensual", f"S/ {empleado.salario_mensual:,.2f}"),
+            ("Valor hora", f"S/ {self._gestor.calculadora.valor_hora(empleado):.2f}"),
+            ("Saldo compensado", f"{empleado.saldo_horas_compensadas:.2f} h"),
+        ]
+        if isinstance(empleado, Supervisor):
+            campos.append(("Area a cargo", empleado.area_a_cargo))
+            campos.append(
+                ("Limite aprobable", f"{empleado.limite_horas_aprobables:.1f} h")
+            )
+        elif isinstance(empleado, ResponsableRRHH):
+            campos.append(("Responsabilidad", empleado.responsabilidad_principal))
+        for etiqueta, valor in campos:
+            print(f" {etiqueta:.<18}: {valor}")
 
     # ------------------------------------------------------------------
     # Lectura de datos con validacion
