@@ -61,6 +61,7 @@ Chahuas Rebatta, César Eduardo
 3. Capítulo 2: Propuesta de Innovación … 7
    - 3.1 Diseño de Flujo de Aplicación … 7
    - 3.2 Diagrama de Clases del Modelo … 13
+   - 3.3 Diagrama de Clases de los Patrones de Diseño a Usar … 14
 4. Conclusiones … 15
 5. Recomendaciones … 15
 6. Objetivo del Estudiante (Student Outcome) … 16
@@ -430,6 +431,26 @@ no es supervisor, rechaza la operación. Para los datos simples (texto vacío,
 salario negativo) se usa `ValueError`. El menú captura todas ellas y continúa
 funcionando.
 
+## 3.3 Diagrama de Clases de los Patrones de Diseño a Usar
+
+Además del modelo de dominio, el sistema aplica cuatro patrones de diseño que
+organizan sus clases y facilitation el mantenimiento del código:
+
+| Patrón | Clases que lo participan | Para qué se usa en el sistema |
+|--------|--------------------------|------------------------------|
+| **Fachada (Facade)** | `MenuConsola` → `GestorHorasExtras` | El menú es el único punto de entrada: oculta las 20 clases del modelo y sus validaciones detrás de una interfaz de 13 opciones. |
+| **Servicio / Repositorio** | `GestorHorasExtras` | Centraliza las colecciones (`empleados`, `registros`, `solicitudes`) y expone la API de negocio, de modo que ninguna otra clase manipula las listas directamente. |
+| **Estrategia (Strategy)** | `CalculadoraHoras` | Se inyecta al gestor por constructor (`GestorHorasExtras(calculadora)`); permite cambiar el recargo de horas extras o el valor de la compensada sin modificar el gestor ni el modelo. |
+| **Plantilla (Template Method)** | `RegistroHora` → `HoraExtra`, `HoraCompensada`; `Solicitud` → `SolicitudHoraExtra`, `SolicitudCompensacion` | Las clases abstractas definen el esqueleto (`resumen()`, `aprobar()`, `rechazar()`) y delegan en métodos abstractos (`calcular_valor()`, `calcular_monto()`) que cada subclase implementa con su propia fórmula. |
+| **Estado (State)** | `Solicitud` → `EstadoSolicitud` | El enum de estados controla las transiciones: cada operación exige el estado previo válido y lanza `EstadoSolicitudInvalidaError` si no se cumple. |
+
+![Diagrama de clases de los patrones de diseño](../salida/diagrama_patrones.png)
+
+*Figura 7. Diagrama de clases de los patrones de diseño aplicados*
+
+El diagrama completo del modelo se encuentra en `drawio/diagrama_clases.drawio`
+y los patrones en `drawio/diagrama_patrones.drawio`.
+
 ---
 
 # F. CONCLUSIONES
@@ -499,6 +520,12 @@ Al finalizar el trabajo, el estudiante es capaz de:
 
 American Psychological Association. (2020). *Publication manual of the American
 Psychological Association* (7.ª ed.). https://doi.org/10.1037/0000165-000
+
+El Libro De Python. (2024). *El libro de Python: Guía práctica para aprender
+programación en Python* [Recurso en línea]. https://ellibrodepython.com/
+
+Cisco Networking Academy. (2021). *Python essentials 2 (Python 3.8)* [Curso en
+línea]. Cisco Systems. https://www.netacad.com/courses/cyber-discovery/python-essentials-2
 
 Lutz, M. (2013). *Learning Python* (5.ª ed.). O'Reilly Media.
 
