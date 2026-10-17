@@ -52,7 +52,7 @@ soluciones que satisfagan necesidades específicas).
 | **Encapsulamiento** | Atributos privados con acceso controlado. | Atributos con `_nombre` y `@property` con validación. |
 | **Pruebas** | Pruebas de métodos de negocio. | `unittest` (biblioteca estándar) — `test/test_sistema.py` con 23 pruebas. |
 | **Excepciones** | Control de excepciones de ingreso. | 7 excepciones personalizadas en `src/excepciones/` (incluye `AprobacionNoAutorizadaError`). |
-| **Informe** | Documento Word con las secciones. | `docs/informe_final.md` y `docs/Trabajo_Parcial_FP2.docx`. |
+| **Informe** | Documento Word con las secciones. | `docs/informe_final.md` y `docs/Trabajo_Final_FP2.docx`. |
 | **APA** | Bibliografía en formato APA. | Sección de Bibliografía con fuentes reales. |
 | **Anexos** | Evidencias del equipo, Git, Trello. | Anexos 1 a 8 con placeholders. |
 | **Cronograma** | Asignación de actividades. | Tabla de 13 actividades en el Capítulo 1.4. |

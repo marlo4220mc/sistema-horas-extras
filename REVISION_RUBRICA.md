@@ -29,7 +29,7 @@
 | Pruebas de métodos de negocio | Sí | 23 pruebas con `unittest`, 23 correctas | `test/test_sistema.py`, `salida/pruebas_unittest.txt` |
 | Control de excepciones | Sí | 7 excepciones propias + `ValueError` | `src/excepciones/excepciones.py` |
 | Validaciones | Sí | Texto, números, salario, horas, duplicados, saldo, estados, fechas | `docs/05_diseno_clases.md` §7 |
-| Informe con la estructura oficial | Sí | Carátula (con logo UPC), índice, introducción, capítulos, bibliografía, anexos; encabezado, numeración de páginas y figuras numeradas | `docs/informe_final.md`, `docs/Trabajo_Parcial_FP2.docx` |
+| Informe con la estructura oficial | Sí | Carátula (con logo UPC), índice, introducción, capítulos, bibliografía, anexos; encabezado, numeración de páginas y figuras numeradas | `docs/informe_final.md`, `docs/Trabajo_Final_FP2.docx` |
 | Bibliografía en formato APA | Sí | 8 fuentes reales en APA 7 | `docs/informe_final.md` §F |
 | Anexos preparados | Sí | Anexos 1 a 8 con placeholders | `docs/informe_final.md` §G |
 | Cronograma y asignación | Sí | Tabla de 13 actividades con responsables | `docs/informe_final.md` §2.4 |
@@ -106,7 +106,7 @@ CÓDIGO          → src/ (módulos .py)
    ↓
 UML             → drawio/diagrama_clases.drawio (coincide con el código)
    ↓
-INFORME         → docs/informe_final.md + docs/Trabajo_Parcial_FP2.docx
+INFORME         → docs/informe_final.md + docs/Trabajo_Final_FP2.docx
 ```
 
 **Resultado de la revisión cruzada:** cada historia de usuario tiene una opción

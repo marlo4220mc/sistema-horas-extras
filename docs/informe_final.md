@@ -1,6 +1,6 @@
 # Sistema de Gestión y Control de Horas Extras y Horas Compensadas
 
-**Trabajo Parcial — Fundamentos de Programación 2**
+**Trabajo Final — Fundamentos de Programación 2**
 
 ---
 
@@ -21,7 +21,7 @@ Ingeniería de Sistemas EPE
 **Curso:**
 1FIS275 — Fundamentos de Programación 2
 
-**Trabajo Parcial**
+**Trabajo Final**
 
 <br>
 
@@ -562,7 +562,7 @@ difuminaron en las capturas del grupo.
 
 ![Carpeta de Drive con la estructura del proyecto](img/evidencias/anexo2_drive_test.jpg)
 
-*Figura 9. Carpeta de Drive con la estructura de carpetas del proyecto y el documento del trabajo parcial*
+*Figura 9. Carpeta de Drive con la estructura de carpetas del proyecto y el documento del trabajo final*
 
 ![Acuerdo sobre el problema real](img/evidencias/anexo3_whatsapp_problema.jpg)
 
@@ -586,7 +586,7 @@ difuminaron en las capturas del grupo.
 
 ![Diagrama de clases y comentarios de revisión](img/evidencias/anexo8_word_diagrama.jpg)
 
-*Figura 15. Documento del trabajo parcial con el diagrama de clases y los comentarios de revisión*
+*Figura 15. Documento del trabajo final con el diagrama de clases y los comentarios de revisión*
 
 ## ANEXO 2 — Evidencias de desarrollo
 

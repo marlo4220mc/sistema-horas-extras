@@ -1,6 +1,6 @@
 # Sistema de Gestión y Control de Horas Extras y Horas Compensadas
 
-Trabajo Parcial del curso **1FIS275 / 1FIS0275 – Fundamentos de Programación 2**
+Trabajo Final del curso **1FIS275 / 1FIS0275 – Fundamentos de Programación 2**
 (Ingeniería de Sistemas EPE — ciclo 2026-25).
 
 Aplicación de **consola en Python** que registra, controla, calcula y reporta
@@ -152,7 +152,7 @@ El cronograma y la asignación de actividades se gestionan en un tablero de Trel
 - `docs/06_uml.md`
 - `docs/07_pruebas.md`
 - `docs/informe_final.md`
-- `docs/Trabajo_Parcial_FP2.docx`
+- `docs/Trabajo_Final_FP2.docx`
 
 ## Autores
 
