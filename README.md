@@ -153,6 +153,7 @@ El cronograma y la asignación de actividades se gestionan en un tablero de Trel
 - `docs/07_pruebas.md`
 - `docs/informe_final.md`
 - `docs/Trabajo_Final_FP2.docx`
+- `docs/PRESENTACION_GRUPO_1.pptx` — presentación de 17 diapositivas con el texto editable
 
 ## Autores
 
