@@ -13,12 +13,13 @@ from excepciones import (
     SaldoInsuficienteError,
     SolicitudNoEncontradaError,
 )
-#Las nuevas son Empleado y ResponsableRRHH.)
 from modelo.empleado import Empleado
 from modelo.estado_solicitud import EstadoSolicitud
+from modelo.hora_compensada import HoraCompensada
 from modelo.registro_hora import RegistroHora
 from modelo.responsable_rrhh import ResponsableRRHH
 from modelo.solicitud import Solicitud
+from modelo.solicitud_hora_extra import SolicitudHoraExtra
 from modelo.supervisor import Supervisor
 from servicio.gestor_horas_extras import GestorHorasExtras
 
@@ -28,12 +29,21 @@ class MenuConsola:
     resultados. Ninguna entrada incorrecta debe terminar el programa: los
     errores se capturan y se informan.
     """
-#AGREGADO PARA PANTALLA
+
     ANCHO_PANTALLA = 56
     COLUMNAS_EMPLEADOS = [
         ("Cod.", "<"), ("Nombre", "<"), ("Cargo", "<"),
         ("Rol", "<"), ("Salario S/", ">"), ("Saldo h", ">"),
     ]
+    COLUMNAS_SOLICITUDES = [
+        ("Id", "<"), ("Tipo", "<"), ("Cod.", "<"), ("Empleado", "<"),
+        ("Fecha", "<"), ("Estado", "<"), ("Monto S/", ">"),
+    ]
+    COLUMNAS_REGISTROS = [
+        ("Id", "<"), ("Cod.", "<"), ("Fecha", "<"), ("Tipo", "<"),
+        ("Horas", ">"), ("Valor S/", ">"), ("Motivo", "<"),
+    ]
+
     def __init__(self, gestor: GestorHorasExtras) -> None:
         if gestor is None:
             raise ValueError("El gestor es obligatorio.")
@@ -53,8 +63,6 @@ class MenuConsola:
                 break
             self._ejecutar_opcion(opcion)
         print("\nFin de la ejecucion. Gracias por usar el sistema.")
-
-    #Actualizado _mostrar_bienvenida y _mostrar_menu_principal
 
     def _mostrar_bienvenida(self) -> None:
         ancho = self.ANCHO_PANTALLA
@@ -147,8 +155,6 @@ class MenuConsola:
     # ------------------------------------------------------------------
     # Opciones del menu
     # ------------------------------------------------------------------
-
-    # ACTUALIZADO _registrar_empleado (reemplazar el método)
     def _registrar_empleado(self) -> None:
         self._encabezado_pantalla("REGISTRAR EMPLEADO")
         print(" Complete los datos del nuevo empleado.")
@@ -369,8 +375,6 @@ class MenuConsola:
             return codigo
         return ""
 
-    # ACTUALIZADO _buscar_empleado y _listar_empleados
-
     def _buscar_empleado(self) -> None:
         self._encabezado_pantalla("BUSCAR EMPLEADO")
         print(" Criterios de busqueda:")
@@ -425,11 +429,15 @@ class MenuConsola:
         )
 
     def _registrar_horas_extras(self) -> None:
-        print("\n--- REGISTRAR HORAS EXTRAS ---")
+        self._encabezado_pantalla("REGISTRAR HORAS EXTRAS")
+        print(" Ingrese los datos de las horas extras trabajadas.")
+        self._linea()
         try:
             codigo = self._leer_empleado_existente("Codigo del empleado: ")
             if self._entrada_agotada:
                 return
+            empleado = self._gestor.buscar_empleado_por_codigo(codigo)
+            print(f"  Empleado: {empleado.nombre_completo} | {empleado.cargo}")
             fecha = self._leer_fecha_no_futura(
                 "Fecha en que se trabajo (dd/mm/aaaa): ",
                 "La fecha en que se trabajo no puede ser futura.",
@@ -439,83 +447,202 @@ class MenuConsola:
             if self._entrada_agotada:
                 return
             solicitud = self._gestor.registrar_solicitud_hora_extra(codigo, fecha, horas, motivo)
-            print(
-                f"  OK. Solicitud registrada: {solicitud.id} | "
-                f"Estado: {solicitud.estado.value} | "
-                f"Pago calculado: S/ {solicitud.calcular_monto():.2f}"
-            )
+            hora_extra = solicitud.hora_extra
+            valor_hora = self._gestor.calculadora.valor_hora(empleado)
+            self._linea()
+            print(" OK. Solicitud de horas extras registrada.")
+            self._imprimir_campos([
+                ("Solicitud", solicitud.id),
+                ("Empleado", f"{empleado.codigo_empleado} - {empleado.nombre_completo}"),
+                ("Fecha trabajada", hora_extra.fecha.strftime("%d/%m/%Y")),
+                ("Horas", f"{hora_extra.cantidad_horas:.2f} h"),
+                ("Motivo", hora_extra.motivo),
+                ("Valor hora", f"S/ {valor_hora:.2f}"),
+                ("Factor de recargo", f"{hora_extra.factor_recargo:.2f}"),
+                ("Pago calculado", f"S/ {solicitud.calcular_monto():.2f}"),
+                ("Estado", solicitud.estado.value),
+            ])
+            print(" La solicitud queda PENDIENTE hasta que un supervisor la apruebe.")
+            self._linea("=")
         except (EmpleadoNoEncontradoError, HorasInvalidasError) as error:
             print(f"  ! {error}")
 
     def _listar_solicitudes(self) -> None:
-        print("\n--- LISTA DE SOLICITUDES ---")
         solicitudes = self._gestor.listar_solicitudes()
         if not solicitudes:
+            self._encabezado_pantalla("LISTA DE SOLICITUDES")
             print("  No hay solicitudes registradas.")
             return
-        for solicitud in solicitudes:
-            print(f"  {solicitud.resumen()}")
+        por_estado = []
+        for estado in EstadoSolicitud:
+            cantidad = sum(1 for s in solicitudes if s.estado == estado)
+            if cantidad:
+                por_estado.append(f"{estado.value}: {cantidad}")
+        self._imprimir_tabla(
+            "LISTA DE SOLICITUDES", self.COLUMNAS_SOLICITUDES,
+            self._filas_solicitudes(solicitudes),
+            f"Total: {len(solicitudes)} solicitud(es) | " + " | ".join(por_estado),
+        )
 
     def _aprobar_solicitud(self) -> None:
-        print("\n--- APROBAR SOLICITUD ---")
+        self._encabezado_pantalla("APROBAR SOLICITUD")
+        if not self._mostrar_pendientes_para_decidir():
+            return
         try:
             id_solicitud = self._leer_solicitud_pendiente("Id de la solicitud (ej. SOL-001): ")
             if self._entrada_agotada:
                 return
+            solicitud = self._gestor.buscar_solicitud(id_solicitud)
+            self._linea()
+            self._imprimir_campos(self._campos_solicitud(solicitud))
+            self._linea()
             self._mostrar_supervisores()
             codigo = self._leer_supervisor("Codigo del supervisor que aprueba: ")
             if self._entrada_agotada:
                 return
+            supervisor = self._gestor.buscar_empleado_por_codigo(codigo)
             solicitud = self._gestor.aprobar_solicitud(id_solicitud, codigo)
-            print(
-                f"  OK. La solicitud {solicitud.id} quedo {solicitud.estado.value} "
-                f"(aprobada por {codigo})."
-            )
+            self._linea()
+            print(" OK. Solicitud aprobada.")
+            self._imprimir_campos([
+                ("Solicitud", solicitud.id),
+                ("Estado", solicitud.estado.value),
+                ("Aprobada por", f"{supervisor.codigo_empleado} - {supervisor.nombre_completo}"),
+                ("Fecha de decision", solicitud.fecha_resolucion.strftime("%d/%m/%Y %H:%M")),
+            ])
+            self._linea("=")
         except (SolicitudNoEncontradaError, EstadoSolicitudInvalidaError,
                 AprobacionNoAutorizadaError) as error:
             print(f"  ! {error}")
 
     def _rechazar_solicitud(self) -> None:
-        print("\n--- RECHAZAR SOLICITUD ---")
+        self._encabezado_pantalla("RECHAZAR SOLICITUD")
+        if not self._mostrar_pendientes_para_decidir():
+            return
         try:
             id_solicitud = self._leer_solicitud_pendiente("Id de la solicitud: ")
             if self._entrada_agotada:
                 return
+            solicitud = self._gestor.buscar_solicitud(id_solicitud)
+            self._linea()
+            self._imprimir_campos(self._campos_solicitud(solicitud))
+            self._linea()
             motivo = self._leer_texto("Motivo del rechazo: ")
             self._mostrar_supervisores()
             codigo = self._leer_supervisor("Codigo del supervisor que rechaza: ")
             if self._entrada_agotada:
                 return
+            supervisor = self._gestor.buscar_empleado_por_codigo(codigo)
             solicitud = self._gestor.rechazar_solicitud(id_solicitud, motivo, codigo)
-            print(
-                f"  OK. La solicitud {solicitud.id} quedo {solicitud.estado.value} "
-                f"(rechazada por {codigo})."
-            )
+            self._linea()
+            print(" OK. Solicitud rechazada.")
+            self._imprimir_campos([
+                ("Solicitud", solicitud.id),
+                ("Estado", solicitud.estado.value),
+                ("Rechazada por", f"{supervisor.codigo_empleado} - {supervisor.nombre_completo}"),
+                ("Motivo del rechazo", solicitud.observacion),
+                ("Fecha de decision", solicitud.fecha_resolucion.strftime("%d/%m/%Y %H:%M")),
+            ])
+            self._linea("=")
         except (SolicitudNoEncontradaError, EstadoSolicitudInvalidaError,
                 AprobacionNoAutorizadaError) as error:
             print(f"  ! {error}")
 
     def _calcular_pago(self) -> None:
-        print("\n--- CALCULAR PAGO DE HORAS EXTRAS ---")
+        self._encabezado_pantalla("CALCULAR PAGO DE HORAS EXTRAS")
         try:
-            id_solicitud = self._leer_solicitud_existente("Id de la solicitud: ")
+            id_solicitud = self._leer_solicitud_existente("Id de la solicitud (ej. SOL-001): ")
             if self._entrada_agotada:
                 return
             solicitud = self._gestor.buscar_solicitud(id_solicitud)
-            print(f"  Empleado......: {solicitud.empleado.nombre_completo}")
-            print(f"  Valor hora....: S/ {self._gestor.calculadora.valor_hora(solicitud.empleado):.2f}")
-            print(f"  {solicitud.detalle()}")
-            print(f"  Estado........: {solicitud.estado.value}")
-            print(f"  PAGO TOTAL....: S/ {self._gestor.calcular_pago_solicitud(id_solicitud):.2f}")
-        except SolicitudNoEncontradaError as error:
+            empleado = solicitud.empleado
+            self._linea()
+            self._imprimir_campos(
+                [c for c in self._campos_solicitud(solicitud) if c[0] != "Pago calculado"]
+            )
+            self._linea()
+            print(" CALCULO DEL PAGO")
+            etiqueta_total = "PAGO TOTAL"
+            if isinstance(solicitud, SolicitudHoraExtra):
+                hora_extra = solicitud.hora_extra
+                self._imprimir_campos([
+                    ("Salario mensual", f"S/ {empleado.salario_mensual:,.2f}"),
+                    ("Horas al mes", f"{empleado.jornada.calcular_horas_mensuales():.0f}"),
+                    ("Valor hora", f"S/ {self._gestor.calculadora.valor_hora(empleado):.2f}"),
+                    ("Factor de recargo", f"{hora_extra.factor_recargo:.2f}"),
+                    ("Horas trabajadas", f"{hora_extra.cantidad_horas:.2f} h"),
+                ])
+                print(" Formula: (salario / horas al mes) x factor x horas")
+            else:
+                print(" Equivalente economico de las horas de la solicitud.")
+                etiqueta_total = "EQUIVALENTE"
+            pago = self._gestor.calcular_pago_solicitud(id_solicitud)
+            self._imprimir_campos([(etiqueta_total, f"S/ {pago:.2f}")])
+            self._linea()
+            if isinstance(solicitud, SolicitudHoraExtra):
+                self._ofrecer_acciones_pago(solicitud)
+            self._linea("=")
+        except (SolicitudNoEncontradaError, EstadoSolicitudInvalidaError) as error:
             print(f"  ! {error}")
 
+    def _ofrecer_acciones_pago(self, solicitud: SolicitudHoraExtra) -> None:
+        """Segun el flujo de pago documentado: una solicitud APROBADA puede
+        pagarse (PAGADA) o convertirse en horas compensadas (COMPENSADA).
+        """
+        estado = solicitud.estado
+        if estado != EstadoSolicitud.APROBADA:
+            if estado in (EstadoSolicitud.PAGADA, EstadoSolicitud.COMPENSADA):
+                print(f" La solicitud ya fue {estado.value}.")
+            else:
+                print(" Solo una solicitud APROBADA puede pagarse o compensarse.")
+            return
+        print(" Acciones para esta solicitud aprobada:")
+        print("   1. Registrar el pago (estado PAGADA)")
+        print("   2. Convertir en horas compensadas (estado COMPENSADA)")
+        print("   0. No realizar ninguna accion")
+        accion = -1
+        while accion not in (0, 1, 2) and not self._entrada_agotada:
+            accion = self._leer_entero("Accion: ")
+            if accion not in (0, 1, 2) and not self._entrada_agotada:
+                print("  ! Ingrese 0, 1 o 2.")
+        if self._entrada_agotada or accion == 0:
+            return
+        usuario = self._gestor.USUARIO_SISTEMA
+        self._linea()
+        if accion == 1:
+            self._gestor.pagar_solicitud(solicitud.id, usuario)
+            print(" OK. Pago registrado.")
+            self._imprimir_campos([
+                ("Solicitud", solicitud.id),
+                ("Estado", solicitud.estado.value),
+                ("Monto pagado", f"S/ {self._gestor.calcular_pago_solicitud(solicitud.id):.2f}"),
+                ("Fecha de registro", solicitud.fecha_resolucion.strftime("%d/%m/%Y %H:%M")),
+            ])
+        else:
+            self._gestor.compensar_solicitud_hora_extra(solicitud.id, usuario)
+            codigo = solicitud.empleado.codigo_empleado
+            print(" OK. Solicitud convertida en horas compensadas.")
+            self._imprimir_campos([
+                ("Solicitud", solicitud.id),
+                ("Estado", solicitud.estado.value),
+                ("Horas acreditadas", f"{solicitud.hora_extra.cantidad_horas:.2f} h"),
+                ("Nuevo saldo", f"{self._gestor.consultar_saldo(codigo):.2f} h"),
+            ])
+
     def _registrar_horas_compensadas(self) -> None:
-        print("\n--- REGISTRAR HORAS COMPENSADAS ---")
+        self._encabezado_pantalla("REGISTRAR HORAS COMPENSADAS")
+        print(" Ingrese los datos de las horas compensadas a otorgar.")
+        self._linea()
         try:
             codigo = self._leer_empleado_existente("Codigo del empleado: ")
             if self._entrada_agotada:
                 return
+            empleado = self._gestor.buscar_empleado_por_codigo(codigo)
+            saldo_anterior = self._gestor.consultar_saldo(codigo)
+            print(
+                f"  Empleado: {empleado.nombre_completo} | "
+                f"Saldo actual: {saldo_anterior:.2f} h"
+            )
             fecha = self._leer_fecha_no_futura(
                 "Fecha (dd/mm/aaaa): ", "La fecha no puede ser futura."
             )
@@ -523,31 +650,59 @@ class MenuConsola:
             motivo = self._leer_texto("Motivo: ")
             if self._entrada_agotada:
                 return
-            self._gestor.registrar_horas_compensadas(codigo, fecha, horas, motivo)
-            print(
-                "  OK. Horas compensadas registradas. "
-                f"Nuevo saldo: {self._gestor.consultar_saldo(codigo)} h"
-            )
+            movimiento = self._gestor.registrar_horas_compensadas(codigo, fecha, horas, motivo)
+            self._linea()
+            print(" OK. Horas compensadas registradas.")
+            self._imprimir_campos([
+                ("Registro", movimiento.id),
+                ("Empleado", f"{empleado.codigo_empleado} - {empleado.nombre_completo}"),
+                ("Fecha", movimiento.fecha.strftime("%d/%m/%Y")),
+                ("Horas otorgadas", f"{movimiento.cantidad_horas:.2f} h"),
+                ("Motivo", movimiento.motivo),
+                ("Saldo anterior", f"{saldo_anterior:.2f} h"),
+                ("Nuevo saldo", f"{self._gestor.consultar_saldo(codigo):.2f} h"),
+            ])
+            self._linea("=")
         except (EmpleadoNoEncontradoError, HorasInvalidasError) as error:
             print(f"  ! {error}")
 
     def _consultar_saldo(self) -> None:
-        print("\n--- CONSULTAR SALDO ---")
+        self._encabezado_pantalla("CONSULTAR SALDO")
         try:
             codigo = self._leer_empleado_existente("Codigo del empleado: ")
             if self._entrada_agotada:
                 return
             empleado = self._gestor.buscar_empleado_por_codigo(codigo)
-            print(f"  Empleado: {empleado.nombre_completo}")
-            print(f"  Saldo de horas compensadas: {self._gestor.consultar_saldo(codigo)} h")
+            otorgadas, utilizadas = self._horas_compensadas_por_empleado(codigo)
+            self._linea()
+            self._imprimir_campos([
+                ("Empleado", f"{empleado.codigo_empleado} - {empleado.nombre_completo}"),
+                ("Cargo", empleado.cargo),
+                ("Horas otorgadas", f"{otorgadas:.2f} h"),
+                ("Horas utilizadas", f"{utilizadas:.2f} h"),
+                ("SALDO DISPONIBLE", f"{self._gestor.consultar_saldo(codigo):.2f} h"),
+            ])
+            self._linea("=")
         except EmpleadoNoEncontradoError as error:
             print(f"  ! {error}")
 
     def _utilizar_horas_compensadas(self) -> None:
-        print("\n--- UTILIZAR HORAS COMPENSADAS ---")
+        self._encabezado_pantalla("UTILIZAR HORAS COMPENSADAS")
+        print(" Descuente horas del saldo compensado del empleado.")
+        self._linea()
         try:
             codigo = self._leer_empleado_existente("Codigo del empleado: ")
             if self._entrada_agotada:
+                return
+            empleado = self._gestor.buscar_empleado_por_codigo(codigo)
+            saldo_anterior = self._gestor.consultar_saldo(codigo)
+            print(
+                f"  Empleado: {empleado.nombre_completo} | "
+                f"Saldo disponible: {saldo_anterior:.2f} h"
+            )
+            if saldo_anterior <= 0:
+                print("  ! El empleado no tiene horas compensadas disponibles.")
+                self._linea("=")
                 return
             horas = self._leer_horas_dentro_del_saldo("Horas a utilizar: ", codigo)
             if self._entrada_agotada:
@@ -556,90 +711,208 @@ class MenuConsola:
             if self._entrada_agotada:
                 return
             solicitud = self._gestor.utilizar_horas_compensadas(codigo, horas, motivo)
-            print(f"  OK. Uso de horas compensadas registrado en la solicitud {solicitud.id}.")
-            print(f"  Nuevo saldo: {self._gestor.consultar_saldo(codigo)} h")
+            self._linea()
+            print(" OK. Uso de horas compensadas registrado.")
+            self._imprimir_campos([
+                ("Solicitud", solicitud.id),
+                ("Empleado", f"{empleado.codigo_empleado} - {empleado.nombre_completo}"),
+                ("Horas utilizadas", f"{solicitud.cantidad_horas:.2f} h"),
+                ("Motivo", solicitud.motivo_uso),
+                ("Saldo anterior", f"{saldo_anterior:.2f} h"),
+                ("Nuevo saldo", f"{self._gestor.consultar_saldo(codigo):.2f} h"),
+                ("Estado", solicitud.estado.value),
+            ])
+            self._linea("=")
         except (EmpleadoNoEncontradoError, HorasInvalidasError, SaldoInsuficienteError) as error:
             print(f"  ! {error}")
 
     def _mostrar_historial(self) -> None:
-        print("\n--- HISTORIAL POR EMPLEADO ---")
+        self._encabezado_pantalla("HISTORIAL POR EMPLEADO")
         try:
             codigo = self._leer_empleado_existente("Codigo del empleado: ")
             if self._entrada_agotada:
                 return
             empleado = self._gestor.buscar_empleado_por_codigo(codigo)
-            print(f"  Empleado: {empleado.nombre_completo}")
-            print("  --- Movimientos de horas ---")
+            self._linea()
+            self._imprimir_campos([
+                ("Empleado", f"{empleado.codigo_empleado} - {empleado.nombre_completo}"),
+                ("Cargo", empleado.cargo),
+                ("Saldo compensado", f"{self._gestor.consultar_saldo(codigo):.2f} h"),
+            ])
+            self._linea("=")
             movimientos = self._gestor.historial_por_empleado(codigo)
-            if not movimientos:
-                print("  Sin movimientos registrados.")
-            for movimiento in movimientos:
-                print(f"  {movimiento.resumen()}")
-            print("  --- Solicitudes ---")
+            if movimientos:
+                self._imprimir_tabla(
+                    "MOVIMIENTOS DE HORAS", self.COLUMNAS_REGISTROS,
+                    self._filas_registros(movimientos),
+                    f"Total: {len(movimientos)} movimiento(s).",
+                )
+            else:
+                self._imprimir_seccion_vacia("MOVIMIENTOS DE HORAS", "Sin movimientos registrados.")
             solicitudes = self._gestor.solicitudes_por_empleado(codigo)
-            if not solicitudes:
-                print("  Sin solicitudes registradas.")
-            for solicitud in solicitudes:
-                print(f"  {solicitud.resumen()}")
+            if solicitudes:
+                self._imprimir_tabla(
+                    "SOLICITUDES DEL EMPLEADO", self.COLUMNAS_SOLICITUDES,
+                    self._filas_solicitudes(solicitudes),
+                    f"Total: {len(solicitudes)} solicitud(es).",
+                )
+            else:
+                self._imprimir_seccion_vacia("SOLICITUDES DEL EMPLEADO", "Sin solicitudes registradas.")
         except EmpleadoNoEncontradoError as error:
             print(f"  ! {error}")
 
     def _menu_reportes(self) -> None:
+        opciones = [
+            (1, "Reporte general"),
+            (2, "Horas extras por empleado"),
+            (3, "Horas extras (registros)"),
+            (4, "Horas compensadas (registros)"),
+            (5, "Saldo de horas compensadas"),
+            (6, "Solicitudes pendientes"),
+            (7, "Total a pagar / pagado"),
+        ]
         volver = False
         while not volver and not self._entrada_agotada:
-            print("\n--- REPORTES ---")
-            print("1. Reporte general")
-            print("2. Horas extras por empleado")
-            print("3. Horas extras (registros)")
-            print("4. Horas compensadas (registros)")
-            print("5. Saldo de horas compensadas")
-            print("6. Solicitudes pendientes")
-            print("7. Total a pagar / pagado")
-            print("0. Volver al menu principal")
+            self._encabezado_pantalla("REPORTES")
+            for numero, texto in opciones:
+                print(f"  {numero:>2}. {texto}")
+            self._linea()
+            print(f"  {0:>2}. Volver al menu principal")
+            self._linea("=")
             opcion = self._leer_entero("Reporte: ")
             if self._entrada_agotada:
                 return
             if opcion == 1:
-                print(self._gestor.reporte_general())
+                self._reporte_general()
             elif opcion == 2:
-                print(self._gestor.reporte_horas_extras_por_empleado())
+                self._reporte_horas_extras_por_empleado()
             elif opcion == 3:
-                self._imprimir_registros(self._gestor.listar_horas_extras(), "HORAS EXTRAS")
+                self._imprimir_registros(
+                    self._gestor.listar_horas_extras(), "HORAS EXTRAS (REGISTROS)"
+                )
             elif opcion == 4:
                 self._imprimir_registros(
-                    self._gestor.listar_horas_compensadas(), "HORAS COMPENSADAS"
+                    self._gestor.listar_horas_compensadas(), "HORAS COMPENSADAS (REGISTROS)"
                 )
             elif opcion == 5:
-                print(self._gestor.reporte_saldos_compensadas())
+                self._reporte_saldos_compensadas()
             elif opcion == 6:
                 self._imprimir_solicitudes(self._gestor.listar_solicitudes_pendientes())
             elif opcion == 7:
-                print(f"  Total a pagar (aprobadas): S/ {self._gestor.total_a_pagar():.2f}")
-                print(f"  Total pagado: S/ {self._gestor.total_pagado():.2f}")
+                self._reporte_totales_pago()
             elif opcion == 0:
                 volver = True
             else:
                 print("  ! Opcion no valida.")
 
-    def _imprimir_registros(self, registros: list[RegistroHora], titulo: str) -> None:
-        print(f"\n--- {titulo} ---")
-        if not registros:
-            print("  Sin registros.")
+    def _reporte_general(self) -> None:
+        gestor = self._gestor
+        self._encabezado_pantalla("REPORTE GENERAL")
+        self._imprimir_campos([
+            ("Empleados registrados", str(len(gestor.listar_empleados()))),
+            ("Solicitudes registradas", str(len(gestor.listar_solicitudes()))),
+            ("Solicitudes pendientes", str(len(gestor.listar_solicitudes_pendientes()))),
+            ("Total de horas extras", f"{gestor.total_horas_extras():.2f} h"),
+            ("Total a pagar (aprobadas)", f"S/ {gestor.total_a_pagar():.2f}"),
+            ("Total pagado", f"S/ {gestor.total_pagado():.2f}"),
+            ("Horas comp. otorgadas", f"{gestor.total_horas_compensadas_otorgadas():.2f} h"),
+            ("Horas comp. utilizadas", f"{gestor.total_horas_compensadas_utilizadas():.2f} h"),
+        ], 26)
+        self._linea("=")
+        solicitudes = gestor.listar_solicitudes()
+        if solicitudes:
+            self._imprimir_tabla(
+                "DETALLE DE SOLICITUDES", self.COLUMNAS_SOLICITUDES,
+                self._filas_solicitudes(solicitudes),
+                f"Total: {len(solicitudes)} solicitud(es).",
+            )
+
+    def _reporte_horas_extras_por_empleado(self) -> None:
+        horas_extras = self._gestor.listar_horas_extras()
+        filas = []
+        total_horas = 0.0
+        total_monto = 0.0
+        for empleado in self._gestor.listar_empleados():
+            registros = [r for r in horas_extras if r.empleado is empleado]
+            if not registros:
+                continue
+            horas = sum(r.cantidad_horas for r in registros)
+            monto = sum(r.calcular_valor() for r in registros)
+            total_horas += horas
+            total_monto += monto
+            filas.append((
+                empleado.codigo_empleado, empleado.nombre_completo, str(len(registros)),
+                f"{horas:.2f}", f"{monto:,.2f}",
+            ))
+        if not filas:
+            self._imprimir_seccion_vacia("HORAS EXTRAS POR EMPLEADO", "Sin registros.")
             return
-        for registro in registros:
-            print(f"  {registro.resumen()}")
+        self._imprimir_tabla(
+            "HORAS EXTRAS POR EMPLEADO",
+            [("Cod.", "<"), ("Empleado", "<"), ("Registros", ">"),
+             ("Horas", ">"), ("Monto S/", ">")],
+            filas,
+            f"Total: {total_horas:.2f} h | S/ {total_monto:,.2f}",
+        )
+
+    def _reporte_saldos_compensadas(self) -> None:
+        filas = []
+        total_saldo = 0.0
+        for empleado in self._gestor.listar_empleados():
+            otorgadas, utilizadas = self._horas_compensadas_por_empleado(empleado.codigo_empleado)
+            saldo = empleado.saldo_horas_compensadas
+            total_saldo += saldo
+            filas.append((
+                empleado.codigo_empleado, empleado.nombre_completo,
+                f"{otorgadas:.2f}", f"{utilizadas:.2f}", f"{saldo:.2f}",
+            ))
+        if not filas:
+            self._imprimir_seccion_vacia("SALDO DE HORAS COMPENSADAS", "No hay empleados registrados.")
+            return
+        self._imprimir_tabla(
+            "SALDO DE HORAS COMPENSADAS",
+            [("Cod.", "<"), ("Empleado", "<"), ("Otorgadas h", ">"),
+             ("Utilizadas h", ">"), ("Saldo h", ">")],
+            filas,
+            f"Saldo total: {total_saldo:.2f} h",
+        )
+
+    def _reporte_totales_pago(self) -> None:
+        gestor = self._gestor
+        extras = [s for s in gestor.listar_solicitudes() if isinstance(s, SolicitudHoraExtra)]
+        aprobadas = sum(1 for s in extras if s.estado == EstadoSolicitud.APROBADA)
+        pagadas = sum(1 for s in extras if s.estado == EstadoSolicitud.PAGADA)
+        self._encabezado_pantalla("TOTAL A PAGAR / PAGADO")
+        self._imprimir_campos([
+            ("Aprobadas por pagar", str(aprobadas)),
+            ("Total a pagar", f"S/ {gestor.total_a_pagar():.2f}"),
+            ("Solicitudes pagadas", str(pagadas)),
+            ("Total pagado", f"S/ {gestor.total_pagado():.2f}"),
+        ], 22)
+        self._linea("=")
+
+    def _imprimir_registros(self, registros: list[RegistroHora], titulo: str) -> None:
+        if not registros:
+            self._imprimir_seccion_vacia(titulo, "Sin registros.")
+            return
+        total_horas = sum(r.cantidad_horas for r in registros)
+        self._imprimir_tabla(
+            titulo, self.COLUMNAS_REGISTROS, self._filas_registros(registros),
+            f"Total: {len(registros)} registro(s) | {total_horas:.2f} h",
+        )
 
     def _imprimir_solicitudes(self, solicitudes: list[Solicitud]) -> None:
-        print("\n--- SOLICITUDES PENDIENTES ---")
         if not solicitudes:
-            print("  No hay solicitudes pendientes.")
+            self._imprimir_seccion_vacia("SOLICITUDES PENDIENTES", "No hay solicitudes pendientes.")
             return
-        for solicitud in solicitudes:
-            print(f"  {solicitud.resumen()}")
-            print(f"      {solicitud.detalle()}")
+        self._imprimir_tabla(
+            "SOLICITUDES PENDIENTES", self.COLUMNAS_SOLICITUDES,
+            self._filas_solicitudes(solicitudes),
+            f"Total: {len(solicitudes)} solicitud(es) pendiente(s).",
+        )
 
     # ------------------------------------------------------------------
-    # helpers visuales (agregar, método nuevo) Presentacion de pantallas (helpers visuales)
+    # Presentacion de pantallas (helpers visuales)
     # ------------------------------------------------------------------
     def _encabezado_pantalla(self, titulo: str, ancho: int | None = None) -> None:
         """Imprime el titulo de una pantalla entre dos lineas de '='."""
@@ -700,6 +973,91 @@ class MenuConsola:
             for e in empleados
         ]
 
+    def _filas_solicitudes(self, solicitudes: list[Solicitud]) -> list[tuple]:
+        """Convierte solicitudes en filas para COLUMNAS_SOLICITUDES."""
+        return [
+            (
+                s.id, s.obtener_tipo(), s.empleado.codigo_empleado,
+                s.empleado.nombre_completo, s.fecha_solicitud.strftime("%d/%m/%Y"),
+                s.estado.value, f"{s.calcular_monto():,.2f}",
+            )
+            for s in solicitudes
+        ]
+
+    def _imprimir_campos(self, campos: list[tuple[str, str]], ancho: int = 18) -> None:
+        """Imprime pares (etiqueta, valor), uno por linea, con puntos de relleno."""
+        for etiqueta, valor in campos:
+            print(f" {etiqueta:.<{ancho}}: {valor}")
+
+    def _imprimir_seccion_vacia(self, titulo: str, mensaje: str) -> None:
+        """Pantalla de una sola linea para cuando no hay datos que mostrar."""
+        self._encabezado_pantalla(titulo)
+        print(f" {mensaje}")
+        self._linea("=")
+
+    def _filas_registros(self, registros: list[RegistroHora]) -> list[tuple]:
+        """Convierte movimientos de horas en filas para COLUMNAS_REGISTROS."""
+        return [
+            (
+                r.id, r.empleado.codigo_empleado, r.fecha.strftime("%d/%m/%Y"),
+                r.obtener_tipo(), f"{r.cantidad_horas:.2f}",
+                f"{r.calcular_valor():,.2f}", r.motivo,
+            )
+            for r in registros
+        ]
+
+    def _horas_compensadas_por_empleado(self, codigo: str) -> tuple[float, float]:
+        """Devuelve (horas otorgadas, horas utilizadas) de un empleado."""
+        movimientos = [
+            m for m in self._gestor.historial_por_empleado(codigo)
+            if isinstance(m, HoraCompensada)
+        ]
+        otorgadas = sum(m.cantidad_horas for m in movimientos if not m.es_consumo)
+        utilizadas = sum(m.cantidad_horas for m in movimientos if m.es_consumo)
+        return otorgadas, utilizadas
+
+    def _mostrar_pendientes_para_decidir(self) -> bool:
+        """Lista las solicitudes pendientes. Devuelve False si no hay ninguna,
+        para que la pantalla termine en vez de pedir un id que no existe.
+        """
+        pendientes = self._gestor.listar_solicitudes_pendientes()
+        if not pendientes:
+            print(" No hay solicitudes pendientes.")
+            self._linea("=")
+            return False
+        print(" Solicitudes pendientes de decision:")
+        for solicitud in pendientes:
+            print(
+                f"   {solicitud.id} | {solicitud.empleado.nombre_completo} "
+                f"({solicitud.empleado.codigo_empleado}) | "
+                f"S/ {solicitud.calcular_monto():.2f}"
+            )
+        self._linea()
+        return True
+
+    def _campos_solicitud(self, solicitud: Solicitud) -> list[tuple[str, str]]:
+        """Datos de una solicitud listos para _imprimir_campos."""
+        empleado = solicitud.empleado
+        campos = [
+            ("Solicitud", solicitud.id),
+            ("Tipo", solicitud.obtener_tipo()),
+            ("Empleado", f"{empleado.codigo_empleado} - {empleado.nombre_completo}"),
+        ]
+        if isinstance(solicitud, SolicitudHoraExtra):
+            hora_extra = solicitud.hora_extra
+            campos += [
+                ("Fecha trabajada", hora_extra.fecha.strftime("%d/%m/%Y")),
+                ("Horas", f"{hora_extra.cantidad_horas:.2f} h"),
+                ("Motivo", hora_extra.motivo),
+            ]
+        else:
+            campos.append(("Detalle", solicitud.detalle()))
+        campos += [
+            ("Pago calculado", f"S/ {solicitud.calcular_monto():.2f}"),
+            ("Estado actual", solicitud.estado.value),
+        ]
+        return campos
+
     def _imprimir_ficha_empleado(self, empleado: Empleado) -> None:
         """Muestra todos los datos de un empleado, uno por linea."""
         campos = [
@@ -721,8 +1079,7 @@ class MenuConsola:
             )
         elif isinstance(empleado, ResponsableRRHH):
             campos.append(("Responsabilidad", empleado.responsabilidad_principal))
-        for etiqueta, valor in campos:
-            print(f" {etiqueta:.<18}: {valor}")
+        self._imprimir_campos(campos)
 
     # ------------------------------------------------------------------
     # Lectura de datos con validacion
